@@ -9,6 +9,7 @@ import ru.bimlibik.pictureswitcher.databinding.FragmentPicturesBinding
 
 class PicturesFragment : Fragment() {
 
+    private val viewModel: PicturesViewModel = PicturesViewModel()
     private lateinit var viewDataBinding: FragmentPicturesBinding
 
     override fun onCreateView(
@@ -17,11 +18,18 @@ class PicturesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         viewDataBinding = FragmentPicturesBinding.inflate(inflater, container, false)
+            .apply { viewModel = this@PicturesFragment.viewModel }
         return viewDataBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.lifecycleOwner = this
+
+        setupAdapter()
+    }
+
+    private fun setupAdapter() {
+        viewDataBinding.recycler.adapter = PicturesAdapter(viewModel)
     }
 }

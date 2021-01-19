@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.bimlibik.pictureswitcher.databinding.ItemPictureBinding
 
-class PicturesAdapter : ListAdapter<Picture, PicturesAdapter.PictureViewHolder>(PictureDiffCallback()) {
+class PicturesAdapter(private val viewModel: PicturesViewModel)
+    : ListAdapter<Picture, PicturesAdapter.PictureViewHolder>(PictureDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PictureViewHolder {
         val binding = ItemPictureBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,6 +27,8 @@ class PicturesAdapter : ListAdapter<Picture, PicturesAdapter.PictureViewHolder>(
 
         fun bind(position: Int) {
             val item = getItem(position)
+            binding.item = item
+            binding.viewModel = viewModel
         }
     }
 
