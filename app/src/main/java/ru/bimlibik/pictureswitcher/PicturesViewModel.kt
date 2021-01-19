@@ -2,6 +2,7 @@ package ru.bimlibik.pictureswitcher
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import ru.bimlibik.pictureswitcher.data.Picture
 
 class PicturesViewModel : ViewModel() {
 

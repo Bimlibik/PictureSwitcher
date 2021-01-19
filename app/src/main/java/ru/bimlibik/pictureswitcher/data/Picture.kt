@@ -1,4 +1,4 @@
-package ru.bimlibik.pictureswitcher
+package ru.bimlibik.pictureswitcher.data
 
 data class Picture(
     val id: Int,

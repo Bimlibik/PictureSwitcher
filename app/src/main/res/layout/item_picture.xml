@@ -7,7 +7,7 @@
             type="ru.bimlibik.pictureswitcher.PicturesViewModel" />
         <variable
             name="item"
-            type="ru.bimlibik.pictureswitcher.Picture" />
+            type="ru.bimlibik.pictureswitcher.data.Picture" />
     </data>
 
     <ImageView

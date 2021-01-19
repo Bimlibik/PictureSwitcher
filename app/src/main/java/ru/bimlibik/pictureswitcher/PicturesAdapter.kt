@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.databinding.ItemPictureBinding
 
 class PicturesAdapter(private val viewModel: PicturesViewModel)
