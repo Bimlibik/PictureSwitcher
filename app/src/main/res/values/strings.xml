@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PictureSwitcher</string>
+    <string name="label_pictures_not_found">Pictures not found</string>
 </resources>
