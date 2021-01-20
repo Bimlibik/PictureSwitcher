@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.google.android.material.navigation.NavigationView
+import org.koin.android.viewmodel.ext.android.viewModel
 import ru.bimlibik.pictureswitcher.databinding.FragmentPicturesBinding
 
 class PicturesFragment : Fragment() {
 
-    private val viewModel: PicturesViewModel = PicturesViewModel()
+    private val viewModel: PicturesViewModel by viewModel()
     private lateinit var viewDataBinding: FragmentPicturesBinding
 
     override fun onCreateView(
@@ -27,6 +30,18 @@ class PicturesFragment : Fragment() {
         viewDataBinding.lifecycleOwner = this
 
         setupAdapter()
+        setupNavDrawerListener()
+    }
+
+    private fun setupNavDrawerListener() {
+        val navDrawer: NavigationView = requireActivity().findViewById(R.id.nav_drawer)
+        val drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawer_layout)
+
+        navDrawer.setNavigationItemSelectedListener { item ->
+            viewModel.searchPictures(item.itemId, item.title.toString())
+            drawerLayout.closeDrawers()
+            true
+        }
     }
 
     private fun setupAdapter() {
