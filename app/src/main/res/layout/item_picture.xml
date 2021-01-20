@@ -14,6 +14,6 @@
         android:id="@+id/picture"
         android:layout_width="wrap_content"
         android:layout_height="300dp"
-        app:preview="@{item.previewUrl}"/>
+        app:preview="@{item.urls.small}"/>
 
 </layout>
