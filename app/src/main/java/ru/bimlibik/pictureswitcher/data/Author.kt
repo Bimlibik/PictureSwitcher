@@ -4,13 +4,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Picture(
+data class Author(
+
     @SerialName("id")
     val id: String,
 
-    @SerialName("urls")
-    val urls: PictureUrl,
-
-    @SerialName("user")
-    val author: Author
+    @SerialName("name")
+    val name: String
 )
