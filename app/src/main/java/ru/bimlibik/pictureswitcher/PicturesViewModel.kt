@@ -3,6 +3,7 @@ package ru.bimlibik.pictureswitcher
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import ru.bimlibik.pictureswitcher.data.Picture
+import ru.bimlibik.pictureswitcher.data.remote.ApiClient
 
 class PicturesViewModel : ViewModel() {
 
@@ -41,7 +42,12 @@ class PicturesViewModel : ViewModel() {
         val result = MutableLiveData<List<Picture>>()
         viewModelScope.launch {
 //            TODO("Load pictures from network")
-            result.value = emptyList()
+            val remoteResult = ApiClient.client.getPictures(page = page)
+            if (remoteResult == null) {
+                result.value = emptyList()
+            } else {
+                result.value = remoteResult
+            }
         }
         return result
     }
