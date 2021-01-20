@@ -2,10 +2,13 @@ package ru.bimlibik.pictureswitcher
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
-import ru.bimlibik.pictureswitcher.data.remote.ApiClient
+import ru.bimlibik.pictureswitcher.data.Result.Success
 
-class PicturesViewModel : ViewModel() {
+class PicturesViewModel(
+    private val repository: IPicturesRepository
+) : ViewModel() {
 
     private val loadedPictures = mutableListOf<Picture>()
 
@@ -22,7 +25,7 @@ class PicturesViewModel : ViewModel() {
 
     private val _pictures: LiveData<List<Picture>> = _triggers.switchMap { triple ->
         val forceUpdate: Boolean = triple.first ?: false
-        val category: String = triple.second ?: DEFAULT_CATEGORY
+        val category: String? = triple.second
         val page: Int = triple.third ?: DEFAULT_PAGE
         loadPictures(category, page)
     }
@@ -37,22 +40,28 @@ class PicturesViewModel : ViewModel() {
     val showScrim: LiveData<Boolean> = _showScrim
 
 
+    fun searchPictures(itemId: Int, query: String) {
+        when(itemId) {
+            R.id.menu_nav_home -> _category.value = null
+            R.id.menu_nav_favorite -> return
+            else -> _category.value = query
+        }
+    }
 
-    private fun loadPictures(query: String, page: Int): LiveData<List<Picture>> {
+    private fun loadPictures(query: String?, page: Int): LiveData<List<Picture>> {
         val result = MutableLiveData<List<Picture>>()
         viewModelScope.launch {
-//            TODO("Load pictures from network")
-            val remoteResult = ApiClient.client.getPictures(page = page)
-            if (remoteResult == null) {
-                result.value = emptyList()
+            val remoteResult = repository.getPictures(query, page)
+            if (remoteResult is Success) {
+                result.value = remoteResult.data
             } else {
-                result.value = remoteResult
+                result.value = emptyList()
             }
         }
         return result
     }
 }
 
-private const val DEFAULT_CATEGORY = ""
+private const val DEFAULT_CATEGORY = "wallpapers"
 private const val DEFAULT_PAGE = 1
 private const val MAX_PAGE = 25
