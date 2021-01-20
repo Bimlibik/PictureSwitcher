@@ -6,4 +6,5 @@
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorScrim">#66434343</color>
+    <color name="colorPictureScrim">#66FFFFFF</color>
 </resources>
