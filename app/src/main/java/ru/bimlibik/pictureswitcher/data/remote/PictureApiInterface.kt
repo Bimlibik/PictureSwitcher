@@ -15,7 +15,7 @@ interface PictureApiInterface {
         @Query("page") page: Int,
     ): PictureResponse
 
-    @GET("photos")
+    @GET("/topics/wallpapers/photos")
     suspend fun getPictures(
         @Query("client_id") clientID: String = BuildConfig.ACCESS_KEY,
         @Query("page") page: Int,
