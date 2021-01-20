@@ -24,9 +24,8 @@ object PicturesBinding {
         val height = imageView.height
         Glide.with(imageView.context)
             .load(previewURL)
-            .placeholder(R.drawable.ic_image)
             .override(width, height)
-            .centerCrop()
+            .placeholder(R.drawable.ic_image)
             .into(imageView)
     }
 }
