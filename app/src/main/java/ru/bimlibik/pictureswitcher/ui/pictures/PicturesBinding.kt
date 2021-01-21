@@ -17,7 +17,7 @@ object PicturesBinding {
         }
     }
 
-    @BindingAdapter("app:preview")
+    @BindingAdapter("app:pictures_preview")
     @JvmStatic
     fun setPicture(imageView: ImageView, previewURL: String) {
         val displayMetrics = imageView.context.resources.displayMetrics
