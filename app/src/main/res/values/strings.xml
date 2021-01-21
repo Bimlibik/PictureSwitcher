@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PictureSwitcher</string>
     <string name="label_pictures_not_found">Pictures not found</string>
+    <string name="label_author">Photo by %s on Unsplash</string>
 </resources>
