@@ -7,27 +7,28 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.toolbar.*
 import ru.bimlibik.pictureswitcher.R
+import ru.bimlibik.pictureswitcher.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfig: AppBarConfiguration
+    private lateinit var viewDataBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        viewDataBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewDataBinding.root)
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(viewDataBinding.toolbarLayout.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val navController = findNavController(R.id.fragment_container)
 
-        appBarConfig = AppBarConfiguration(setOf(R.id.pictures_fragment), drawer_layout)
+        appBarConfig = AppBarConfiguration(setOf(R.id.pictures_fragment), viewDataBinding.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfig)
 
-        nav_drawer.setupWithNavController(navController)
+        viewDataBinding.navDrawer.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
