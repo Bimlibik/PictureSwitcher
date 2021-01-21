@@ -1,4 +1,4 @@
-package ru.bimlibik.pictureswitcher
+package ru.bimlibik.pictureswitcher.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +9,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
+import ru.bimlibik.pictureswitcher.R
 
 class MainActivity : AppCompatActivity() {
 

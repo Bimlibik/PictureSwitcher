@@ -1,4 +1,4 @@
-package ru.bimlibik.pictureswitcher
+package ru.bimlibik.pictureswitcher.ui.pictures
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import org.koin.android.viewmodel.ext.android.viewModel
+import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.databinding.FragmentPicturesBinding
 
 class PicturesFragment : Fragment() {

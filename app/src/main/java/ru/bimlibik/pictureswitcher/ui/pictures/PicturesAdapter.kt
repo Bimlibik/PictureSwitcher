@@ -1,4 +1,4 @@
-package ru.bimlibik.pictureswitcher
+package ru.bimlibik.pictureswitcher.ui.pictures
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

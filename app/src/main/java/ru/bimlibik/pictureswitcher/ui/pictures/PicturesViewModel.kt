@@ -1,7 +1,8 @@
-package ru.bimlibik.pictureswitcher
+package ru.bimlibik.pictureswitcher.ui.pictures
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.Result.Success

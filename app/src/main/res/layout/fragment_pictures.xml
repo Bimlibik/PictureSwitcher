@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="ru.bimlibik.pictureswitcher.PicturesViewModel" />
+            type="ru.bimlibik.pictureswitcher.ui.pictures.PicturesViewModel" />
     </data>
 
     <FrameLayout

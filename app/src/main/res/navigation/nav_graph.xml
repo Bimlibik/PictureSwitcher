@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/pictures_fragment"
-        android:name="ru.bimlibik.pictureswitcher.PicturesFragment"
+        android:name="ru.bimlibik.pictureswitcher.ui.pictures.PicturesFragment"
         android:label="PicturesFragment" />
 </navigation>

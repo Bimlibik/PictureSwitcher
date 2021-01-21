@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="ru.bimlibik.pictureswitcher.PicturesViewModel" />
+            type="ru.bimlibik.pictureswitcher.ui.pictures.PicturesViewModel" />
         <variable
             name="item"
             type="ru.bimlibik.pictureswitcher.data.Picture" />
