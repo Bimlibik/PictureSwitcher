@@ -7,5 +7,18 @@
     <fragment
         android:id="@+id/pictures_fragment"
         android:name="ru.bimlibik.pictureswitcher.ui.pictures.PicturesFragment"
-        android:label="PicturesFragment" />
+        android:label="PicturesFragment" >
+        <action
+            android:id="@+id/action_pictures_fragment_to_picture_detail_fragment"
+            app:destination="@id/picture_detail_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/picture_detail_fragment"
+        android:name="ru.bimlibik.pictureswitcher.ui.picture_detail.PictureDetailFragment"
+        android:label="PictureDetailFragment">
+
+        <argument
+            android:name="picture"
+            app:argType="ru.bimlibik.pictureswitcher.data.Picture" />
+    </fragment>
 </navigation>
