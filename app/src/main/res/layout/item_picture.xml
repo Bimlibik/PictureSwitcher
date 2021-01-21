@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:scaleType="centerCrop"
-        app:preview="@{item.urls.small}"/>
+        app:pictures_preview="@{item.urls.small}"
+        android:onClick="@{()-> viewModel.showDetail(item)}"/>
 
 </layout>
