@@ -9,11 +9,19 @@ class PictureSwitcherApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        INSTANCE = this
 
         startKoin {
             androidLogger()
             androidContext(this@PictureSwitcherApp)
             modules(appModule)
         }
+    }
+
+    companion object {
+        private lateinit var INSTANCE: PictureSwitcherApp
+
+        @JvmStatic
+        fun get(): PictureSwitcherApp = INSTANCE
     }
 }
