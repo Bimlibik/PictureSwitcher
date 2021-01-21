@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.databinding.FragmentPicturesBinding
+import ru.bimlibik.pictureswitcher.utils.EventObserver
 
 class PicturesFragment : Fragment() {
 
@@ -32,6 +34,14 @@ class PicturesFragment : Fragment() {
 
         setupAdapter()
         setupNavDrawerListener()
+        setupNavigation()
+    }
+
+    private fun setupNavigation() {
+        viewModel.pictureDetailEvent.observe(viewLifecycleOwner, EventObserver {
+            val action = PicturesFragmentDirections.actionPicturesFragmentToPictureDetailFragment(it)
+            findNavController().navigate(action)
+        })
     }
 
     private fun setupNavDrawerListener() {

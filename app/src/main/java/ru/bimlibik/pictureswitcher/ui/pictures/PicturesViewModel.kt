@@ -6,6 +6,7 @@ import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.Result.Success
+import ru.bimlibik.pictureswitcher.utils.Event
 
 class PicturesViewModel(
     private val repository: IPicturesRepository
@@ -40,6 +41,9 @@ class PicturesViewModel(
     private val _showScrim = MutableLiveData(false)
     val showScrim: LiveData<Boolean> = _showScrim
 
+    private val _pictureDetailEvent = MutableLiveData<Event<Picture>>()
+    val pictureDetailEvent: LiveData<Event<Picture>> = _pictureDetailEvent
+
 
     fun searchPictures(itemId: Int, query: String) {
         when(itemId) {
@@ -47,6 +51,10 @@ class PicturesViewModel(
             R.id.menu_nav_favorite -> return
             else -> _category.value = query
         }
+    }
+
+    fun showDetail(picture: Picture) {
+        _pictureDetailEvent.value = Event(picture)
     }
 
     private fun loadPictures(query: String?, page: Int): LiveData<List<Picture>> {
