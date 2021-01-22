@@ -1,6 +1,7 @@
 package ru.bimlibik.pictureswitcher
 
 import android.app.Application
+import io.realm.Realm
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -16,6 +17,8 @@ class PictureSwitcherApp : Application() {
             androidContext(this@PictureSwitcherApp)
             modules(appModule)
         }
+
+        Realm.init(this)
     }
 
     companion object {

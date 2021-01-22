@@ -1,6 +1,8 @@
 package ru.bimlibik.pictureswitcher.data
 
 import android.os.Parcelable
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 import kotlinx.serialization.SerialName
@@ -8,13 +10,18 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @Parcelize
-data class Picture(
+open class Picture(
     @SerialName("id")
-    val id: @RawValue String,
+    @PrimaryKey
+    var id: @RawValue String? = null,
 
     @SerialName("urls")
-    val urls: @RawValue PictureUrl,
+    var urls: @RawValue PictureUrl? = null,
 
     @SerialName("user")
-    val author: @RawValue Author
-) : Parcelable
+    var author: @RawValue Author? = null
+
+) : Parcelable, RealmObject() {
+
+    override fun toString(): String = "Picture(id = $id, author = ${author?.name})"
+}

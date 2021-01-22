@@ -10,13 +10,13 @@ class PictureDetailViewModel : ViewModel() {
 
     private val _picture = MutableLiveData<Picture>()
 
-    private val _pictureUrl: LiveData<String> = _picture.map { picture ->
-        picture.urls.small
+    private val _pictureUrl: LiveData<String?> = _picture.map { picture ->
+        picture.urls?.small
     }
-    val pictureUrl: LiveData<String> = _pictureUrl
+    val pictureUrl: LiveData<String?> = _pictureUrl
 
-    private val _author: LiveData<String> = _picture.map { picture -> picture.author.name }
-    val author: LiveData<String> = _author
+    private val _author: LiveData<String?> = _picture.map { picture -> picture.author?.name }
+    val author: LiveData<String?> = _author
 
     fun start(picture: Picture) {
         _picture.value = picture

@@ -1,23 +1,29 @@
 package ru.bimlibik.pictureswitcher.data
 
+import io.realm.RealmObject
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PictureUrl(
+open class PictureUrl(
 
     @SerialName("raw")
-    val raw: String,
+    var raw: String? = null,
 
     @SerialName("full")
-    val full: String,
+    var full: String? = null,
 
     @SerialName("regular")
-    val regular: String,
+    var regular: String? = null,
 
     @SerialName("small")
-    val small: String,
+    var small: String? = null,
 
     @SerialName("thumb")
-    val thumb: String
-)
+    var thumb: String? = null
+
+) : RealmObject() {
+
+    override fun toString(): String =
+        "PictureUrl(raw = $raw, full = $full, regular = $regular, small = $small, thumb = $thumb)"
+}
