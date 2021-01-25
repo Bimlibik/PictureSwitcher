@@ -2,6 +2,7 @@ package ru.bimlibik.pictureswitcher
 
 import android.app.Application
 import io.realm.Realm
+import io.realm.RealmConfiguration
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -12,13 +13,19 @@ class PictureSwitcherApp : Application() {
         super.onCreate()
         INSTANCE = this
 
+        // koin init
         startKoin {
             androidLogger()
             androidContext(this@PictureSwitcherApp)
             modules(appModule)
         }
 
+        // realm init
         Realm.init(this)
+        val config = RealmConfiguration.Builder()
+            .name("favorite_pictures.realm")
+            .build()
+        Realm.setDefaultConfiguration(config)
     }
 
     companion object {
