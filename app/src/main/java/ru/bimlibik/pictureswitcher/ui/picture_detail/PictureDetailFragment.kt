@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.bimlibik.pictureswitcher.databinding.FragmentPictureDetailBinding
+import ru.bimlibik.pictureswitcher.utils.setupSnackbar
 
 class PictureDetailFragment : Fragment() {
 
@@ -31,5 +32,10 @@ class PictureDetailFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.lifecycleOwner = this
         viewModel.start(args.picture)
+        setupSnackbar()
+    }
+
+    private fun setupSnackbar() {
+        view?.setupSnackbar(this, viewModel.snackbarText)
     }
 }

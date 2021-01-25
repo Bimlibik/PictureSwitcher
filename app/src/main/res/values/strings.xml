@@ -2,4 +2,6 @@
     <string name="app_name">PictureSwitcher</string>
     <string name="label_pictures_not_found">Pictures not found</string>
     <string name="label_author">Photo by %s on Unsplash</string>
+    <string name="snackbar_added_to_favorites">Added to favorites</string>
+    <string name="snackbar_removed_from_favorites">Removed from favorites</string>
 </resources>
