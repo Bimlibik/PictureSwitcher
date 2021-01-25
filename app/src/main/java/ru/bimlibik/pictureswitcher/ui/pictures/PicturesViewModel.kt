@@ -8,9 +8,7 @@ import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.Result.Success
 import ru.bimlibik.pictureswitcher.utils.Event
 
-class PicturesViewModel(
-    private val repository: IPicturesRepository
-) : ViewModel() {
+class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel() {
 
     private val loadedPictures = mutableListOf<Picture>()
 
@@ -48,7 +46,7 @@ class PicturesViewModel(
     fun searchPictures(itemId: Int, query: String) {
         when(itemId) {
             R.id.menu_nav_home -> _category.value = null
-            R.id.menu_nav_favorite -> return
+            R.id.menu_nav_favorite -> _category.value = FAVORITES
             else -> _category.value = query
         }
     }
@@ -60,7 +58,7 @@ class PicturesViewModel(
     private fun loadPictures(query: String?, page: Int): LiveData<List<Picture>> {
         val result = MutableLiveData<List<Picture>>()
         viewModelScope.launch {
-            val remoteResult = repository.getPictures(query, page)
+            val remoteResult = repository.getPictures(query, page, query == FAVORITES)
             if (remoteResult is Success) {
                 result.value = remoteResult.data
             } else {
@@ -72,5 +70,6 @@ class PicturesViewModel(
 }
 
 private const val DEFAULT_CATEGORY = "wallpapers"
+private const val FAVORITES = "favorites"
 private const val DEFAULT_PAGE = 1
 private const val MAX_PAGE = 25
