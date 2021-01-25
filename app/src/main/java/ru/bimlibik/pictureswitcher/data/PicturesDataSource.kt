@@ -1,5 +1,7 @@
 package ru.bimlibik.pictureswitcher.data
 
+import androidx.lifecycle.LiveData
+
 interface PicturesDataSource {
 
     interface Remote {
@@ -8,10 +10,11 @@ interface PicturesDataSource {
 
     interface Local {
 
-
         fun updateFavorite(picture: Picture): Boolean
 
-        fun getFavoritePictures(): Result<List<Picture>>
+        fun getFavoritePictures(): LiveData<List<Picture>>
+
+        fun close()
     }
 
 
