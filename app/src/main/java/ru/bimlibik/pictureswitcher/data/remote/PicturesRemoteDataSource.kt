@@ -7,7 +7,6 @@ import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.PicturesDataSource
 import ru.bimlibik.pictureswitcher.data.Result
 import ru.bimlibik.pictureswitcher.data.Result.*
-import java.lang.Exception
 
 class PicturesRemoteDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
