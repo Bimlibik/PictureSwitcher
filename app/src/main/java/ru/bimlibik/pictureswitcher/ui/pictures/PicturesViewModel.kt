@@ -5,6 +5,7 @@ import kotlinx.coroutines.launch
 import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
+import ru.bimlibik.pictureswitcher.data.Result
 import ru.bimlibik.pictureswitcher.data.Result.Success
 import ru.bimlibik.pictureswitcher.utils.Event
 
@@ -27,7 +28,14 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
         val forceUpdate: Boolean = triple.first ?: false
         val category: String? = triple.second
         val page: Int = triple.third ?: DEFAULT_PAGE
-        loadPictures(category, page)
+
+        if (category == FAVORITES) {
+            repository.getFavorites().distinctUntilChanged().switchMap {
+                loadFromFavorites(it)
+            }
+        } else {
+            loadPictures(category, page)
+        }
     }
 
     val pictures: LiveData<List<Picture>> = _pictures
@@ -42,9 +50,13 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
     private val _pictureDetailEvent = MutableLiveData<Event<Picture>>()
     val pictureDetailEvent: LiveData<Event<Picture>> = _pictureDetailEvent
 
+    override fun onCleared() {
+        super.onCleared()
+        repository.close()
+    }
 
     fun searchPictures(itemId: Int, query: String) {
-        when(itemId) {
+        when (itemId) {
             R.id.menu_nav_home -> _category.value = null
             R.id.menu_nav_favorite -> _category.value = FAVORITES
             else -> _category.value = query
@@ -55,10 +67,21 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
         _pictureDetailEvent.value = Event(picture)
     }
 
+    private fun loadFromFavorites(picturesResult: Result<List<Picture>>): LiveData<List<Picture>> {
+        val result = MutableLiveData<List<Picture>>()
+
+        if (picturesResult is Success) {
+            result.value = picturesResult.data
+        } else {
+            result.value = emptyList()
+        }
+        return result
+    }
+
     private fun loadPictures(query: String?, page: Int): LiveData<List<Picture>> {
         val result = MutableLiveData<List<Picture>>()
         viewModelScope.launch {
-            val remoteResult = repository.getPictures(query, page, query == FAVORITES)
+            val remoteResult = repository.getPictures(query, page)
             if (remoteResult is Success) {
                 result.value = remoteResult.data
             } else {
