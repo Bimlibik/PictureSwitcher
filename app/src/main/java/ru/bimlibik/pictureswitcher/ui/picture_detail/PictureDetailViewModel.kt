@@ -1,12 +1,11 @@
 package ru.bimlibik.pictureswitcher.ui.picture_detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
+import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
 
-class PictureDetailViewModel : ViewModel() {
+class PictureDetailViewModel(private val repository: IPicturesRepository) : ViewModel() {
 
     private val _picture = MutableLiveData<Picture>()
 
@@ -20,6 +19,15 @@ class PictureDetailViewModel : ViewModel() {
 
     fun start(picture: Picture) {
         _picture.value = picture
+    }
+
+    fun updateFavorite() {
+        _picture.value?.let { picture ->
+            viewModelScope.launch {
+                repository.updateFavorite(picture)
+            }
+
+        }
     }
 
 
