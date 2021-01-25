@@ -11,7 +11,7 @@ import java.lang.Exception
 
 class PicturesRemoteDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : PicturesDataSource {
+) : PicturesDataSource.Remote {
 
     override suspend fun getPictures(query: String?, page: Int): Result<List<Picture>> {
         if (query == null) {
@@ -20,7 +20,7 @@ class PicturesRemoteDataSource(
         return searchPictures(query, page)
     }
 
-     private suspend fun getAllPictures(page: Int): Result<List<Picture>> =
+    private suspend fun getAllPictures(page: Int): Result<List<Picture>> =
         withContext(ioDispatcher) {
             return@withContext try {
                 Success(ApiClient.client.getPictures(page = page))
