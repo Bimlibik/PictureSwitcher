@@ -18,4 +18,15 @@ open class Author(
 ) : RealmObject() {
 
     override fun toString(): String = "Author(id = $id, name = $name)"
+
+    override fun equals(other: Any?): Boolean {
+        if (other == null || other !is Author) return false
+        return id == other.id && name == other.name
+    }
+
+    override fun hashCode(): Int {
+        var result = id?.hashCode() ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        return result
+    }
 }
