@@ -17,6 +17,9 @@ class PicturesAdapter(private val viewModel: PicturesViewModel)
     }
 
     override fun onBindViewHolder(holder: PictureViewHolder, position: Int) {
+        if (position >= itemCount - 1) {
+            viewModel.loadMore()
+        }
         holder.bind(position)
     }
 
