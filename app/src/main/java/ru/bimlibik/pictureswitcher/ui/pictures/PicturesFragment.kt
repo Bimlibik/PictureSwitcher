@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -35,6 +36,7 @@ class PicturesFragment : Fragment() {
         setupAdapter()
         setupNavDrawerListener()
         setupNavigation()
+        setupToolbar()
     }
 
     private fun setupNavigation() {
@@ -53,6 +55,11 @@ class PicturesFragment : Fragment() {
             drawerLayout.closeDrawers()
             true
         }
+    }
+
+    private fun setupToolbar() {
+        val toolbarTitle: TextView = requireActivity().findViewById(R.id.toolbar_title)
+        toolbarTitle.text = resources.getString(R.string.app_name)
     }
 
     private fun setupAdapter() {
