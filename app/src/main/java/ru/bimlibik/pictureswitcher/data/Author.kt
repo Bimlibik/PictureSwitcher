@@ -13,7 +13,10 @@ open class Author(
     var id: String? = null,
 
     @SerialName("name")
-    var name: String? = null
+    var name: String? = null,
+
+    @SerialName("username")
+    var username: String? = null
 
 ) : RealmObject() {
 
@@ -28,5 +31,12 @@ open class Author(
         var result = id?.hashCode() ?: 0
         result = 31 * result + (name?.hashCode() ?: 0)
         return result
+    }
+
+    fun getProfileLink(): String {
+        if (username == null) {
+            return "https://unsplash.com/?utm_source=pictureswitcher&utm_medium=referral"
+        }
+        return "https://unsplash.com/@$username?utm_source=your_app_name&utm_medium=referral"
     }
 }
