@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/author_profile_fragment"
-        android:name="ru.bimlibik.pictureswitcher.ui.AuthorProfileFragment"
+        android:name="ru.bimlibik.pictureswitcher.ui.author_profile.AuthorProfileFragment"
         android:label="AuthorProfileFragment">
         <argument
             android:name="link"

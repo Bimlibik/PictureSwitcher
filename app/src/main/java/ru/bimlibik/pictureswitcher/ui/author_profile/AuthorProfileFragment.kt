@@ -1,4 +1,4 @@
-package ru.bimlibik.pictureswitcher.ui
+package ru.bimlibik.pictureswitcher.ui.author_profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
