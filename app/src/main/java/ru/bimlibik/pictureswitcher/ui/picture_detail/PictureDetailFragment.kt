@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.bimlibik.pictureswitcher.databinding.FragmentPictureDetailBinding
+import ru.bimlibik.pictureswitcher.utils.EventObserver
 import ru.bimlibik.pictureswitcher.utils.setupSnackbar
 
 class PictureDetailFragment : Fragment() {
@@ -33,6 +35,18 @@ class PictureDetailFragment : Fragment() {
         viewDataBinding.lifecycleOwner = this
         viewModel.start(args.picture)
         setupSnackbar()
+        setupNavigation()
+    }
+
+    private fun setupNavigation() {
+        viewModel.authorProfileEvent.observe(viewLifecycleOwner, EventObserver {
+            val action = PictureDetailFragmentDirections
+                .actionPictureDetailFragmentToAuthorProfileFragment(
+                    args.picture.getAuthorProfileLink(),
+                    args.picture.author?.name
+                )
+            findNavController().navigate(action)
+        })
     }
 
     private fun setupSnackbar() {

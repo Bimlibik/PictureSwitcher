@@ -22,8 +22,15 @@ class PictureDetailViewModel(private val repository: IPicturesRepository) : View
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
 
+    private val _authorProfileEvent = MutableLiveData<Event<Unit>>()
+    val authorProfileEvent: LiveData<Event<Unit>> = _authorProfileEvent
+
     fun start(picture: Picture) {
         _picture.value = picture
+    }
+
+    fun showAuthorProfile() {
+        _authorProfileEvent.value = Event(Unit)
     }
 
     fun updateFavorite() {
