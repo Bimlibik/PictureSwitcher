@@ -1,11 +1,14 @@
 package ru.bimlibik.pictureswitcher.data
 
+import android.os.Parcelable
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Parcelize
 @RealmClass(embedded = true)
 open class Author(
 
@@ -18,7 +21,7 @@ open class Author(
     @SerialName("username")
     var username: String? = null
 
-) : RealmObject() {
+) : Parcelable, RealmObject() {
 
     override fun toString(): String = "Author(id = $id, name = $name)"
 

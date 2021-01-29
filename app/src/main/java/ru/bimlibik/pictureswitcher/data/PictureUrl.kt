@@ -1,11 +1,14 @@
 package ru.bimlibik.pictureswitcher.data
 
+import android.os.Parcelable
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Parcelize
 @RealmClass(embedded = true)
 open class PictureUrl(
 
@@ -24,7 +27,7 @@ open class PictureUrl(
     @SerialName("thumb")
     var thumb: String? = null
 
-) : RealmObject() {
+) : Parcelable, RealmObject() {
 
     override fun toString(): String =
         "PictureUrl(raw = $raw, full = $full, regular = $regular, small = $small, thumb = $thumb)"
