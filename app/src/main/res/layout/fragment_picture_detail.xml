@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="ru.bimlibik.pictureswitcher.ui.picture_detail.PictureDetailViewModel" />
@@ -11,6 +12,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorScrim"
+            android:elevation="8dp"
+            android:visibility="@{viewModel.showScrim ? View.VISIBLE : View.GONE}">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
 
         <ImageView
             android:layout_width="match_parent"
@@ -59,7 +72,8 @@
                     android:id="@+id/btn_wallpaper"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/ic_check"/>
+                    android:src="@drawable/ic_check"
+                    android:onClick="@{()-> viewModel.setPictureAsWallpaper()}"/>
             </LinearLayout>
 
         </LinearLayout>

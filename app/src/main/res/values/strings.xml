@@ -2,6 +2,11 @@
     <string name="app_name">PictureSwitcher</string>
     <string name="label_pictures_not_found">Pictures not found</string>
     <string name="label_author">Photo by %s on Unsplash</string>
+    <string name="label_dialog_title">Set picture as wallpaper?</string>
+    <string name="label_ok">OK</string>
+    <string name="label_cancel">Cancel</string>
     <string name="snackbar_added_to_favorites">Added to favorites</string>
     <string name="snackbar_removed_from_favorites">Removed from favorites</string>
+    <string name="snackbar_wallpaper_success">Wallpaper has been successfully updated</string>
+    <string name="snackbar_wallpaper_error">Error while setting wallpaper</string>
 </resources>

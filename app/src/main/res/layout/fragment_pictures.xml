@@ -36,18 +36,6 @@
                 android:textSize="24sp" />
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorScrim"
-            android:elevation="8dp"
-            android:visibility="@{viewModel.showScrim ? View.VISIBLE : View.GONE}">
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-        </FrameLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
