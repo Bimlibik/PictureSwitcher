@@ -18,7 +18,8 @@
             android:layout_height="match_parent"
             android:background="@color/colorScrim"
             android:elevation="8dp"
-            android:visibility="@{viewModel.showScrim ? View.VISIBLE : View.GONE}">
+            android:visibility="@{viewModel.showScrim ? View.VISIBLE : View.GONE}"
+            android:clickable="@{viewModel.showScrim}">
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
