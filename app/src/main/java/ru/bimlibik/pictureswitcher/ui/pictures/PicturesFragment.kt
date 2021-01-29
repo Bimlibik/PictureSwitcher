@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -23,7 +22,7 @@ class PicturesFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding = FragmentPicturesBinding.inflate(inflater, container, false)
             .apply { viewModel = this@PicturesFragment.viewModel }
         return viewDataBinding.root
@@ -58,8 +57,8 @@ class PicturesFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        val toolbarTitle: TextView = requireActivity().findViewById(R.id.toolbar_title)
-        toolbarTitle.text = resources.getString(R.string.app_name)
+        val drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawer_layout)
+        viewDataBinding.toolbar.setNavigationOnClickListener { drawerLayout.open() }
     }
 
     private fun setupAdapter() {

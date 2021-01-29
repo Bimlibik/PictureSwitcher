@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.work.Data
@@ -93,8 +93,9 @@ class PictureDetailFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        val toolbarTitle: TextView = requireActivity().findViewById(R.id.toolbar_title)
-        toolbarTitle.text = null
+        viewDataBinding.toolbar.setNavigationOnClickListener { view ->
+            view.findNavController().navigateUp()
+        }
     }
 
     private fun setupSnackbar() {

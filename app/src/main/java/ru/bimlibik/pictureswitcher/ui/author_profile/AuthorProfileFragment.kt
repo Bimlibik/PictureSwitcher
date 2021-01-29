@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.databinding.FragmentAuthorProfileBinding
 
 class AuthorProfileFragment : Fragment() {
@@ -39,9 +37,9 @@ class AuthorProfileFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        val toolbar: Toolbar = requireActivity().findViewById(R.id.toolbar_layout)
-        val toolbarTitle: TextView = requireActivity().findViewById(R.id.toolbar_title)
-        toolbar.setNavigationIcon(R.drawable.ic_close)
-        toolbarTitle.text = args.authorName
+        viewDataBinding.toolbarTitle.text = args.authorName
+        viewDataBinding.toolbar.setNavigationOnClickListener { view ->
+            view.findNavController().navigateUp()
+        }
     }
 }

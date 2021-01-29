@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="ru.bimlibik.pictureswitcher.ui.picture_detail.PictureDetailViewModel" />
@@ -13,6 +15,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"
+            android:layout_alignParentTop="true"
+            android:elevation="8dp">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center" />
+        </androidx.appcompat.widget.Toolbar>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -20,6 +40,7 @@
             android:elevation="8dp"
             android:visibility="@{viewModel.showScrim ? View.VISIBLE : View.GONE}"
             android:clickable="@{viewModel.showScrim}">
+
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -29,7 +50,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:picture_preview="@{viewModel.pictureUrl}"/>
+            app:picture_preview="@{viewModel.pictureUrl}" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/colorWhite"
-                android:text="@{String.format(@string/label_author, viewModel.author)}"/>
+                android:text="@{String.format(@string/label_author, viewModel.author)}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,7 +80,7 @@
                     android:layout_height="50dp"
                     android:layout_marginEnd="16dp"
                     android:src="@drawable/ic_info"
-                    android:onClick="@{()-> viewModel.showAuthorProfile()}"/>
+                    android:onClick="@{()-> viewModel.showAuthorProfile()}" />
 
                 <ImageView
                     android:id="@+id/btn_favorite"
@@ -67,14 +88,14 @@
                     android:layout_height="50dp"
                     android:layout_marginEnd="16dp"
                     android:src="@drawable/ic_favorites"
-                    android:onClick="@{()-> viewModel.updateFavorite()}"/>
+                    android:onClick="@{()-> viewModel.updateFavorite()}" />
 
                 <ImageView
                     android:id="@+id/btn_wallpaper"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_check"
-                    android:onClick="@{()-> viewModel.setPictureAsWallpaper()}"/>
+                    android:onClick="@{()-> viewModel.setPictureAsWallpaper()}" />
             </LinearLayout>
 
         </LinearLayout>
