@@ -3,9 +3,8 @@ package ru.bimlibik.pictureswitcher.ui.pictures
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.data.Picture
+import ru.bimlibik.pictureswitcher.utils.setSmallPicture
 
 object PicturesBinding {
 
@@ -19,14 +18,7 @@ object PicturesBinding {
 
     @BindingAdapter("app:pictures_preview")
     @JvmStatic
-    fun setPicture(imageView: ImageView, previewURL: String) {
-        val displayMetrics = imageView.context.resources.displayMetrics
-        val width = displayMetrics.widthPixels / 2
-        val height = imageView.height
-        Glide.with(imageView.context)
-            .load(previewURL)
-            .override(width, height)
-            .placeholder(R.drawable.ic_image)
-            .into(imageView)
+    fun setPicture(imageView: ImageView, url: String) {
+        imageView.setSmallPicture(url)
     }
 }
