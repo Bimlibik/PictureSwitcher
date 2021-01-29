@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ru.bimlibik.pictureswitcher.utils.getSizeParams
 
 @Serializable
 @Parcelize
@@ -47,4 +48,6 @@ open class Picture(
         }
         return author.getProfileLink()
     }
+
+    fun getPictureLink(): String = urls?.raw + getSizeParams()
 }
