@@ -15,6 +15,7 @@ fun Context.getBitmap(url: String?): Bitmap? {
         Glide.with(this)
             .asBitmap()
             .load(url)
+            .centerCrop()
             .submit(displayMetrics.widthPixels, displayMetrics.heightPixels)
             .get()
     } catch (e: IOException) {
