@@ -9,6 +9,9 @@
         <variable
             name="viewModel"
             type="ru.bimlibik.pictureswitcher.ui.picture_detail.PictureDetailViewModel" />
+        <variable
+            name="item"
+            type="ru.bimlibik.pictureswitcher.data.Picture" />
     </data>
 
     <RelativeLayout
@@ -21,7 +24,8 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_back"
             android:layout_alignParentTop="true"
-            android:elevation="8dp">
+            android:elevation="8dp"
+            app:custom_color="@{item.color}">
 
             <TextView
                 android:id="@+id/toolbar_title"
@@ -48,9 +52,10 @@
         </FrameLayout>
 
         <ImageView
+            android:id="@+id/img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:picture_preview="@{viewModel.pictureUrl}" />
+            app:picture_preview="@{item.pictureLink}" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/colorWhite"
-                android:text="@{String.format(@string/label_author, viewModel.author)}" />
+                android:text="@{String.format(@string/label_author, item.author.name)}" />
 
             <LinearLayout
                 android:layout_width="match_parent"

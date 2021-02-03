@@ -12,14 +12,6 @@ class PictureDetailViewModel(private val repository: IPicturesRepository) : View
 
     private val _picture = MutableLiveData<Picture>()
 
-    private val _pictureUrl: LiveData<String?> = _picture.map { picture ->
-        picture.urls?.small
-    }
-    val pictureUrl: LiveData<String?> = _pictureUrl
-
-    private val _author: LiveData<String?> = _picture.map { picture -> picture.author?.name }
-    val author: LiveData<String?> = _author
-
     private val _showScrim = MutableLiveData(false)
     val showScrim: LiveData<Boolean> = _showScrim
 

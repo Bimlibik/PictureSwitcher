@@ -30,10 +30,13 @@ class PictureDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding = FragmentPictureDetailBinding
             .inflate(inflater, container, false)
-            .apply { viewModel = this@PictureDetailFragment.viewModel }
+            .apply {
+                viewModel = this@PictureDetailFragment.viewModel
+                item = args.picture
+            }
         return viewDataBinding.root
     }
 
