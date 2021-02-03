@@ -50,6 +50,10 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
         repository.close()
     }
 
+    fun start() {
+        repository.open()
+    }
+
     fun searchPictures(itemId: Int, query: String) {
         when (itemId) {
             R.id.menu_nav_home -> _category.value = null

@@ -14,6 +14,8 @@ interface PicturesDataSource {
 
         fun getFavoritePictures(): LiveData<List<Picture>>
 
+        fun open()
+
         fun close()
     }
 

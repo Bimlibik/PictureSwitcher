@@ -31,6 +31,7 @@ class PicturesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.lifecycleOwner = this
+        viewModel.start()
 
         setupAdapter()
         setupNavDrawerListener()

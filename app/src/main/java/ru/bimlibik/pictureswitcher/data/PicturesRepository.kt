@@ -35,6 +35,10 @@ class PicturesRepository(
             picturesLocalDataSource.updateFavorite(picture)
         }
 
+    override fun open() {
+        picturesLocalDataSource.open()
+    }
+
     override fun close() {
         picturesLocalDataSource.close()
     }

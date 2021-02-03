@@ -10,5 +10,7 @@ interface IPicturesRepository {
 
      fun getFavorites(): LiveData<Result<List<Picture>>>
 
+     fun open()
+
      fun close()
 }

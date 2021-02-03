@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.collect
 import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.PicturesDataSource
 
-class PicturesLocalDataSource(
-    private val defaultRealm: Realm = Realm.getDefaultInstance()
-) : PicturesDataSource.Local {
+class PicturesLocalDataSource : PicturesDataSource.Local {
+
+    private lateinit var defaultRealm: Realm
 
     override fun getFavoritePictures(): LiveData<List<Picture>> =
         liveData {
@@ -39,6 +39,10 @@ class PicturesLocalDataSource(
         }
 
         return isFavorite
+    }
+
+    override fun open() {
+        defaultRealm = Realm.getDefaultInstance()
     }
 
     override fun close() {
