@@ -1,6 +1,8 @@
 package ru.bimlibik.pictureswitcher.ui.pictures
 
+import android.graphics.drawable.GradientDrawable
 import android.widget.ImageView
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.bimlibik.pictureswitcher.data.Picture
@@ -18,7 +20,17 @@ object PicturesBinding {
 
     @BindingAdapter("app:pictures_preview")
     @JvmStatic
-    fun setPicture(imageView: ImageView, url: String) {
-        imageView.setSmallPicture(url)
+    fun setPicture(imageView: ImageView, picture: Picture) {
+        imageView.setSmallPicture(picture)
+    }
+
+    @BindingAdapter("app:custom_color")
+    @JvmStatic
+    fun setCustomToolbarColor(toolbar: Toolbar, color: Int) {
+        val gradient = GradientDrawable(
+            GradientDrawable.Orientation.TOP_BOTTOM,
+            intArrayOf(color, android.R.color.transparent)
+        )
+        toolbar.background = gradient
     }
 }
