@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import ru.bimlibik.pictureswitcher.utils.getSizeParams
 
 @Serializable
@@ -20,7 +21,10 @@ open class Picture(
     var urls: @RawValue PictureUrl? = null,
 
     @SerialName("user")
-    var author: @RawValue Author? = null
+    var author: @RawValue Author? = null,
+
+    @Transient
+    var color: @RawValue Int = android.R.color.transparent
 
 ) : Parcelable, RealmObject() {
 
