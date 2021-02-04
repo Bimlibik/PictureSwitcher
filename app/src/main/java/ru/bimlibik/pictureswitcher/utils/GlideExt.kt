@@ -4,7 +4,9 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.palette.graphics.Palette
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -39,7 +41,6 @@ fun ImageView.setSmallPicture(picture: Picture) {
     GlideApp.with(this.context)
         .asBitmap()
         .load(picture.urls?.small)
-        .placeholder(R.drawable.ic_image)
         .centerCrop()
         .override(width, height)
         .thumbnail(0.2f)
@@ -51,10 +52,21 @@ fun ImageView.setPreview(url: String) {
     GlideApp.with(this)
         .load(url)
         .centerCrop()
-        .placeholder(R.drawable.ic_image)
+        .placeholder(getPlaceholder(this.context))
         .thumbnail(0.2f)
         .into(this)
 }
+
+private fun getPlaceholder(context: Context): CircularProgressDrawable =
+    CircularProgressDrawable(context).apply {
+        strokeWidth = 5f
+        centerRadius = 30f
+        setColorSchemeColors(
+            ContextCompat.getColor(context, R.color.colorAccent),
+            ContextCompat.getColor(context, R.color.colorSecondaryAccent)
+        )
+        start()
+    }
 
 
 /**
