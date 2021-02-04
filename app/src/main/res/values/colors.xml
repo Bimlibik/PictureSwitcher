@@ -7,4 +7,6 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorScrim">#66434343</color>
     <color name="colorPictureScrim">#66FFFFFF</color>
+    <color name="colorIconPressed">#77F8FFFF</color>
+    <color name="colorIconDefault">#F8FFFF</color>
 </resources>

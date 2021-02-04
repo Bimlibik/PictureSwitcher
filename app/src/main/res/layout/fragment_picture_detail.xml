@@ -84,7 +84,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_info"
+                    android:src="@drawable/state_info"
                     android:onClick="@{()-> viewModel.showAuthorProfile()}" />
 
                 <ImageView
@@ -92,14 +92,15 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_favorites"
+                    android:src="@drawable/state_favorite"
+
                     android:onClick="@{()-> viewModel.updateFavorite()}" />
 
                 <ImageView
                     android:id="@+id/btn_wallpaper"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/ic_check"
+                    android:src="@drawable/state_check"
                     android:onClick="@{()-> viewModel.setPictureAsWallpaper()}" />
             </LinearLayout>
 
