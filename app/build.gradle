@@ -66,6 +66,9 @@ dependencies {
     // work
     implementation "androidx.work:work-runtime-ktx:2.4.0"
 
+    // swiperefreshlayout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
     // retrofit + converter
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
