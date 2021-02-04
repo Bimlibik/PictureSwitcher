@@ -1,104 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/menu_nav_home"
-        android:title="Home"
-        android:icon="@drawable/ic_home"/>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_nav_home"
+            android:title="Home"
+            android:icon="@drawable/ic_home" />
 
-    <item
-        android:id="@+id/menu_nav_favorite"
-        android:title="Favorites"
-        android:icon="@drawable/ic_favorite"/>
+        <item
+            android:id="@+id/menu_nav_favorite"
+            android:title="Favorites"
+            android:icon="@drawable/ic_favorite_fill" />
+    </group>
 
-    <item android:title="Categories">
-        <menu>
-            <item
-                android:id="@+id/menu_cat_all"
-                android:title="All" />
+        <item android:title="Categories" >
+            <menu>
+                <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_cat_all"
+                    android:title="All" />
 
-            <item
-                android:id="@+id/menu_cat_animals"
-                android:title="Animals" />
+                <item
+                    android:id="@+id/menu_cat_animals"
+                    android:title="Animals" />
 
-            <item
-                android:id="@+id/menu_cat_architecture"
-                android:title="Architecture" />
+                <item
+                    android:id="@+id/menu_cat_architecture"
+                    android:title="Architecture" />
 
-            <item
-                android:id="@+id/menu_cat_arts_and_culture"
-                android:title="Arts and culture" />
+                <item
+                    android:id="@+id/menu_cat_arts_and_culture"
+                    android:title="Arts and culture" />
 
-            <item
-                android:id="@+id/menu_cat_athletics"
-                android:title="Athletics" />
+                <item
+                    android:id="@+id/menu_cat_athletics"
+                    android:title="Athletics" />
 
-            <item
-                android:id="@+id/menu_cat_business_and_work"
-                android:title="Business and Work" />
+                <item
+                    android:id="@+id/menu_cat_business_and_work"
+                    android:title="Business and Work" />
 
-            <item
-                android:id="@+id/menu_cat_events"
-                android:title="Events" />
+                <item
+                    android:id="@+id/menu_cat_events"
+                    android:title="Events" />
 
-            <item
-                android:id="@+id/menu_cat_experimental"
-                android:title="Experimental" />
+                <item
+                    android:id="@+id/menu_cat_experimental"
+                    android:title="Experimental" />
 
-            <item
-                android:id="@+id/menu_cat_fashion"
-                android:title="Fashion" />
+                <item
+                    android:id="@+id/menu_cat_fashion"
+                    android:title="Fashion" />
 
-            <item
-                android:id="@+id/menu_cat_film"
-                android:title="Film" />
+                <item
+                    android:id="@+id/menu_cat_film"
+                    android:title="Film" />
 
-            <item
-                android:id="@+id/menu_cat_food_and_drink"
-                android:title="Food and Drink" />
+                <item
+                    android:id="@+id/menu_cat_food_and_drink"
+                    android:title="Food and Drink" />
 
-            <item
-                android:id="@+id/menu_cat_health_and_wellness"
-                android:title="Health and Wellness" />
+                <item
+                    android:id="@+id/menu_cat_health_and_wellness"
+                    android:title="Health and Wellness" />
 
-            <item
-                android:id="@+id/menu_cat_history"
-                android:title="History" />
+                <item
+                    android:id="@+id/menu_cat_history"
+                    android:title="History" />
 
-            <item
-                android:id="@+id/menu_cat_interiors"
-                android:title="Interiors" />
+                <item
+                    android:id="@+id/menu_cat_interiors"
+                    android:title="Interiors" />
 
-            <item
-                android:id="@+id/menu_cat_nature"
-                android:title="Nature" />
+                <item
+                    android:id="@+id/menu_cat_nature"
+                    android:title="Nature" />
 
-            <item
-                android:id="@+id/menu_cat_people"
-                android:title="People" />
+                <item
+                    android:id="@+id/menu_cat_people"
+                    android:title="People" />
 
-            <item
-                android:id="@+id/menu_cat_spirituality"
-                android:title="Spirituality" />
+                <item
+                    android:id="@+id/menu_cat_spirituality"
+                    android:title="Spirituality" />
 
-            <item
-                android:id="@+id/menu_cat_street"
-                android:title="Street" />
+                <item
+                    android:id="@+id/menu_cat_street"
+                    android:title="Street" />
 
-            <item
-                android:id="@+id/menu_cat_technology"
-                android:title="Technology" />
+                <item
+                    android:id="@+id/menu_cat_technology"
+                    android:title="Technology" />
 
-            <item
-                android:id="@+id/menu_cat_travel"
-                android:title="Travel" />
+                <item
+                    android:id="@+id/menu_cat_travel"
+                    android:title="Travel" />
 
-            <item
-                android:id="@+id/menu_cat_textures"
-                android:title="Textures" />
+                <item
+                    android:id="@+id/menu_cat_textures"
+                    android:title="Textures" />
+                </group>
 
-
-        </menu>
-    </item>
+            </menu>
+        </item>
 
 </menu>

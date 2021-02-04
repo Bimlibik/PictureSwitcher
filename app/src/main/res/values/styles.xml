@@ -13,4 +13,9 @@
         <item name="color">@color/colorWhite</item>
     </style>
 
+    <style name="NavigationViewStyle">
+        <item name="android:textColorSecondary">@color/colorSecondaryAccent</item>
+        <item name="android:listDivider">@color/colorPrimaryLight</item>
+    </style>
+
 </resources>
