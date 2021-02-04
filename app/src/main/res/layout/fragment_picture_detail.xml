@@ -92,8 +92,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/state_favorite"
-
+                    android:src="@{viewModel.isFavorite ? @drawable/state_favorite_fill : @drawable/state_favorite}"
                     android:onClick="@{()-> viewModel.updateFavorite()}" />
 
                 <ImageView

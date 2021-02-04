@@ -41,6 +41,15 @@ class PicturesLocalDataSource : PicturesDataSource.Local {
         return isFavorite
     }
 
+    override fun isFavorite(picture: Picture): LiveData<Boolean> =
+        liveData {
+            defaultRealm.where<Picture>()
+                .equalTo("id", picture.id)
+                .findAllAsync()
+                .toFlow()
+                .collect { emit(!it.isEmpty()) }
+        }
+
     override fun open() {
         defaultRealm = Realm.getDefaultInstance()
     }

@@ -12,6 +12,10 @@ class PictureDetailViewModel(private val repository: IPicturesRepository) : View
 
     private val _picture = MutableLiveData<Picture>()
 
+    val isFavorite: LiveData<Boolean> = _picture.switchMap { picture ->
+        repository.isFavorite(picture)
+    }
+
     private val _showScrim = MutableLiveData(false)
     val showScrim: LiveData<Boolean> = _showScrim
 

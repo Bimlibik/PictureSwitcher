@@ -14,10 +14,11 @@ interface PicturesDataSource {
 
         fun getFavoritePictures(): LiveData<List<Picture>>
 
+        fun isFavorite(picture: Picture): LiveData<Boolean>
+
         fun open()
 
         fun close()
     }
-
 
 }

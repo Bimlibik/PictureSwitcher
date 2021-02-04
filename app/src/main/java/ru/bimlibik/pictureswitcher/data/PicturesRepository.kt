@@ -30,6 +30,9 @@ class PicturesRepository(
     override fun getFavorites(): LiveData<Result<List<Picture>>> =
         picturesLocalDataSource.getFavoritePictures().map { Success(it) }
 
+    override fun isFavorite(picture: Picture): LiveData<Boolean> =
+        picturesLocalDataSource.isFavorite(picture)
+
     override suspend fun updateFavorite(picture: Picture): Boolean =
         withContext(ioDispatcher) {
             picturesLocalDataSource.updateFavorite(picture)
