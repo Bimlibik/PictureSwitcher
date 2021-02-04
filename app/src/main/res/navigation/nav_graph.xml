@@ -27,7 +27,11 @@
             app:argType="ru.bimlibik.pictureswitcher.data.Picture" />
         <action
             android:id="@+id/action_picture_detail_fragment_to_authorProfileFragment"
-            app:destination="@id/author_profile_fragment" />
+            app:destination="@id/author_profile_fragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
     </fragment>
 
     <fragment
