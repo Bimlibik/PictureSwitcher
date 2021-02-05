@@ -2,8 +2,11 @@ package ru.bimlibik.pictureswitcher.utils
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.palette.graphics.Palette
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -48,11 +51,12 @@ fun ImageView.setSmallPicture(picture: Picture) {
         .into(this)
 }
 
-fun ImageView.setPreview(url: String) {
+fun ImageView.setPreview(url: String, errorLayout: LinearLayout) {
     GlideApp.with(this)
         .load(url)
         .centerCrop()
         .placeholder(getPlaceholder(this.context))
+        .listener(getRequestListener(this, errorLayout))
         .thumbnail(0.2f)
         .into(this)
 }
@@ -85,7 +89,7 @@ private fun getRequestListener(picture: Picture) = object : RequestListener<Bitm
         target: Target<Bitmap>?,
         isFirstResource: Boolean
     ): Boolean {
-        Log.i(TAG, "Error while loading picture^ $e")
+        Log.e(TAG, "Error while loading picture^ $e")
         return false
     }
 
@@ -104,6 +108,33 @@ private fun getRequestListener(picture: Picture) = object : RequestListener<Bitm
         } catch (e: IllegalStateException) {
             Log.i(TAG, "Picture color already exists.")
         }
+        return false
+    }
+}
+
+private fun getRequestListener(imageView: ImageView, errorLayout: LinearLayout) = object : RequestListener<Drawable> {
+
+    override fun onLoadFailed(
+        e: GlideException?,
+        model: Any?,
+        target: Target<Drawable>?,
+        isFirstResource: Boolean
+    ): Boolean {
+        Log.e(TAG, "Error while loading picture^ $e")
+        imageView.visibility = View.GONE
+        errorLayout.visibility = View.VISIBLE
+        return false
+    }
+
+    override fun onResourceReady(
+        resource: Drawable?,
+        model: Any?,
+        target: Target<Drawable>?,
+        dataSource: DataSource?,
+        isFirstResource: Boolean
+    ): Boolean {
+        imageView.visibility = View.VISIBLE
+        errorLayout.visibility = View.GONE
         return false
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -51,11 +52,36 @@
                 android:layout_gravity="center" />
         </FrameLayout>
 
+        <LinearLayout
+            android:id="@+id/errorLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:elevation="8dp"
+            android:visibility="gone"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:src="@drawable/ic_image"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_picture_not_found"
+                android:textSize="24sp"
+                android:textColor="@color/colorWhite"/>
+        </LinearLayout>
+
         <ImageView
             android:id="@+id/img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:picture_preview="@{item.pictureLink}" />
+            app:picture_preview="@{item.pictureLink}"
+            app:error="@{errorLayout}" />
 
         <LinearLayout
             android:layout_width="match_parent"

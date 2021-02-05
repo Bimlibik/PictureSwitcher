@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">PictureSwitcher</string>
     <string name="label_pictures_not_found">Pictures not found</string>
+    <string name="label_picture_not_found">Picture not found</string>
     <string name="label_author">Photo by %s on Unsplash</string>
     <string name="label_dialog_title">Set picture as wallpaper?</string>
     <string name="label_ok">OK</string>

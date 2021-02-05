@@ -61,7 +61,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_pictures_not_found"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textColor="@color/colorWhite"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
