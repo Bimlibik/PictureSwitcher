@@ -12,6 +12,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.databinding.FragmentPicturesBinding
 import ru.bimlibik.pictureswitcher.utils.EventObserver
+import ru.bimlibik.pictureswitcher.utils.setupRefreshLayout
 
 class PicturesFragment : Fragment() {
 
@@ -37,6 +38,7 @@ class PicturesFragment : Fragment() {
         setupNavDrawerListener()
         setupNavigation()
         setupToolbar()
+        setupRefreshLayout(viewDataBinding.swipe)
     }
 
     private fun setupNavigation() {

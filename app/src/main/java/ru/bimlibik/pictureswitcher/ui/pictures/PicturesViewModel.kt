@@ -17,6 +17,9 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
     private val _category = MutableLiveData<String>()
     private val _page = MutableLiveData(DEFAULT_PAGE)
 
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
+
     private val _triggers =
         MediatorLiveData<Triple<Boolean?, String?, Int?>>().apply {
             addSource(_forceUpdate) { value = Triple(it, _category.value, _page.value) }
@@ -27,7 +30,12 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
     private val _pictures: LiveData<List<Picture>> = _triggers.switchMap { triple ->
         val forceUpdate: Boolean = triple.first ?: false
         val category: String? = triple.second
-        val page: Int = triple.third ?: DEFAULT_PAGE
+        var page: Int = triple.third ?: DEFAULT_PAGE
+
+        if (forceUpdate) {
+            _dataLoading.value = true
+            page = DEFAULT_PAGE
+        }
 
         if (category == FAVORITES) {
             repository.getFavorites().distinctUntilChanged().switchMap { loadFromFavorites(it) }
@@ -72,6 +80,10 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
         _page.value = page
     }
 
+    fun refresh() {
+        _forceUpdate.value = true
+    }
+
     private fun loadFromFavorites(picturesResult: Result<List<Picture>>): LiveData<List<Picture>> {
         val result = MutableLiveData<List<Picture>>()
 
@@ -81,6 +93,7 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
             result.value = emptyList()
         }
 
+        _dataLoading.value = false
         return result
     }
 
@@ -95,6 +108,7 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
             } else {
                 result.value = emptyList()
             }
+            _dataLoading.value = false
         }
 
         return result
