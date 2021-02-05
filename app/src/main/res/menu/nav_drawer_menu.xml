@@ -13,12 +13,12 @@
             android:icon="@drawable/ic_favorite_fill" />
     </group>
 
-        <item android:title="Categories" >
-            <menu>
-                <group android:checkableBehavior="single">
+    <item android:title="Categories">
+        <menu>
+            <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/menu_cat_all"
-                    android:title="All" />
+                    android:title="Abstraction" />
 
                 <item
                     android:id="@+id/menu_cat_animals"
@@ -30,23 +30,19 @@
 
                 <item
                     android:id="@+id/menu_cat_arts_and_culture"
-                    android:title="Arts and culture" />
-
-                <item
-                    android:id="@+id/menu_cat_athletics"
-                    android:title="Athletics" />
+                    android:title="Arts" />
 
                 <item
                     android:id="@+id/menu_cat_business_and_work"
                     android:title="Business and Work" />
 
                 <item
-                    android:id="@+id/menu_cat_events"
-                    android:title="Events" />
+                    android:id="@+id/menu_cat_cars"
+                    android:title="Cars" />
 
                 <item
-                    android:id="@+id/menu_cat_experimental"
-                    android:title="Experimental" />
+                    android:id="@+id/menu_cat_fall"
+                    android:title="Fall" />
 
                 <item
                     android:id="@+id/menu_cat_fashion"
@@ -57,20 +53,32 @@
                     android:title="Film" />
 
                 <item
+                    android:id="@+id/menu_cat_flowers"
+                    android:title="Flowers" />
+
+                <item
                     android:id="@+id/menu_cat_food_and_drink"
                     android:title="Food and Drink" />
 
                 <item
-                    android:id="@+id/menu_cat_health_and_wellness"
-                    android:title="Health and Wellness" />
-
-                <item
-                    android:id="@+id/menu_cat_history"
-                    android:title="History" />
+                    android:id="@+id/menu_cat_holidays"
+                    android:title="Holidays" />
 
                 <item
                     android:id="@+id/menu_cat_interiors"
                     android:title="Interiors" />
+
+                <item
+                    android:id="@+id/menu_cat_macro"
+                    android:title="Macro" />
+
+                <item
+                    android:id="@+id/menu_cat_minimalism"
+                    android:title="Minimalism" />
+
+                <item
+                    android:id="@+id/menu_cat_music"
+                    android:title="Music" />
 
                 <item
                     android:id="@+id/menu_cat_nature"
@@ -81,8 +89,24 @@
                     android:title="People" />
 
                 <item
-                    android:id="@+id/menu_cat_spirituality"
-                    android:title="Spirituality" />
+                    android:id="@+id/menu_cat_romantic"
+                    android:title="Romantic" />
+
+                <item
+                    android:id="@+id/menu_cat_summer"
+                    android:title="Summer" />
+
+                <item
+                    android:id="@+id/menu_cat_space"
+                    android:title="Space" />
+
+                <item
+                    android:id="@+id/menu_cat_sport"
+                    android:title="Sport" />
+
+                <item
+                    android:id="@+id/menu_cat_spring"
+                    android:title="Spring" />
 
                 <item
                     android:id="@+id/menu_cat_street"
@@ -99,9 +123,12 @@
                 <item
                     android:id="@+id/menu_cat_textures"
                     android:title="Textures" />
-                </group>
+                <item
+                    android:id="@+id/menu_cat_winter"
+                    android:title="Winter" />
+            </group>
 
-            </menu>
-        </item>
+        </menu>
+    </item>
 
 </menu>
