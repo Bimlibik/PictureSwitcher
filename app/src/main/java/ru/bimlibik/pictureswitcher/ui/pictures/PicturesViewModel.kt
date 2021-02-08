@@ -35,6 +35,7 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
         if (forceUpdate) {
             _dataLoading.value = true
             page = DEFAULT_PAGE
+            _forceUpdate.value = false
         }
 
         if (category == FAVORITES) {
