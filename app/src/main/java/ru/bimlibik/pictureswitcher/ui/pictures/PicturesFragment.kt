@@ -2,6 +2,7 @@ package ru.bimlibik.pictureswitcher.ui.pictures
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -61,6 +62,31 @@ class PicturesFragment : Fragment() {
     private fun setupToolbar() {
         val drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawer_layout)
         viewDataBinding.toolbar.setNavigationOnClickListener { drawerLayout.open() }
+        viewDataBinding.toolbar.inflateMenu(R.menu.pictures_menu)
+        val searchItem = viewDataBinding.toolbar.menu.findItem(R.id.menu_search)
+        val searchView: SearchView = searchItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { viewModel.searchPictures(searchView.id, it) }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+        })
+
+        searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                viewModel.searchPictures(R.id.menu_nav_home, "")
+                return true
+            }
+        })
     }
 
     private fun setupAdapter() {
