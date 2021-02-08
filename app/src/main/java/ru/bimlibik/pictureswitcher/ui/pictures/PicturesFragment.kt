@@ -1,9 +1,7 @@
 package ru.bimlibik.pictureswitcher.ui.pictures
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -26,6 +24,7 @@ class PicturesFragment : Fragment() {
     ): View {
         viewDataBinding = FragmentPicturesBinding.inflate(inflater, container, false)
             .apply { viewModel = this@PicturesFragment.viewModel }
+        setHasOptionsMenu(true)
         return viewDataBinding.root
     }
 

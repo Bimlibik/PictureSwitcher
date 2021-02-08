@@ -5,7 +5,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
         <item name="drawerArrowStyle">@style/DrawerIconStyle</item>
+        <item name="android:editTextColor">@color/colorWhite</item>
+        <item name="android:textColorHint">@color/colorIconPressed</item>
+        <item name="searchViewStyle">@style/SearchViewStyle</item>
     </style>
 
     <style name="DrawerIconStyle" parent="Widget.AppCompat.DrawerArrowToggle">
@@ -17,5 +21,12 @@
         <item name="android:textColorSecondary">@color/colorSecondaryAccent</item>
         <item name="android:listDivider">@color/colorPrimaryLight</item>
     </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.Light.SearchView">
+        <item name="queryHint">Search</item>
+        <item name="searchHintIcon">@drawable/ic_search_hint</item>
+        <item name="closeIcon">@drawable/ic_close</item>
+    </style>
+
 
 </resources>
