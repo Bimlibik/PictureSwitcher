@@ -5,43 +5,30 @@ import kotlinx.coroutines.launch
 import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
+import ru.bimlibik.pictureswitcher.data.Query
 import ru.bimlibik.pictureswitcher.data.Result
 import ru.bimlibik.pictureswitcher.data.Result.Success
-import ru.bimlibik.pictureswitcher.utils.DEFAULT_PAGE
 import ru.bimlibik.pictureswitcher.utils.Event
 import ru.bimlibik.pictureswitcher.utils.FAVORITES
 
 class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel() {
 
-    private val _forceUpdate = MutableLiveData(false)
-    private val _category = MutableLiveData<String>()
-    private val _page = MutableLiveData(DEFAULT_PAGE)
+    private val currentQuery = Query()
+
+    private val _trigger = MutableLiveData(currentQuery)
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val _triggers =
-        MediatorLiveData<Triple<Boolean?, String?, Int?>>().apply {
-            addSource(_forceUpdate) { value = Triple(it, _category.value, _page.value) }
-            addSource(_category) { value = Triple(_forceUpdate.value, it, _page.value) }
-            addSource(_page) { value = Triple(_forceUpdate.value, _category.value, it) }
-        }
-
-    private val _pictures: LiveData<List<Picture>> = _triggers.switchMap { triple ->
-        val forceUpdate: Boolean = triple.first ?: false
-        val category: String? = triple.second
-        var page: Int = triple.third ?: DEFAULT_PAGE
-
-        if (forceUpdate) {
+    private val _pictures: LiveData<List<Picture>> = _trigger.switchMap { query ->
+        if (query.forceUpdate) {
             _dataLoading.value = true
-            page = DEFAULT_PAGE
-            _forceUpdate.value = false
         }
 
-        if (category == FAVORITES) {
+        if (query.category == FAVORITES) {
             repository.getFavorites().distinctUntilChanged().switchMap { loadFromFavorites(it) }
         } else {
-            loadPictures(category, page)
+            loadPictures(query.category, query.page)
         }
     }
 
@@ -65,11 +52,10 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
 
     fun searchPictures(itemId: Int, query: String) {
         when (itemId) {
-            R.id.menu_nav_home -> _category.value = null
-            R.id.menu_nav_favorite -> _category.value = FAVORITES
-            else -> _category.value = query
+            R.id.menu_nav_home -> updateQuery()
+            R.id.menu_nav_favorite -> updateQuery(Query(category = FAVORITES))
+            else -> updateQuery(Query(category = query))
         }
-        _page.value = null
     }
 
     fun showDetail(picture: Picture) {
@@ -77,12 +63,20 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
     }
 
     fun loadMore() {
-        val page = (_page.value ?: DEFAULT_PAGE) + 1
-        _page.value = page
+        updateQuery(Query(category = currentQuery.category, page = currentQuery.nextPage))
     }
 
     fun refresh() {
-        _forceUpdate.value = true
+        updateQuery(Query(forceUpdate = true, category = currentQuery.category))
+    }
+
+    private fun updateQuery(query: Query = Query()) {
+        currentQuery.apply {
+            forceUpdate = query.forceUpdate
+            category = query.category
+            page = query.page
+        }
+        _trigger.value = currentQuery
     }
 
     private fun loadFromFavorites(picturesResult: Result<List<Picture>>): LiveData<List<Picture>> {
