@@ -52,7 +52,7 @@ class PictureDetailFragment : Fragment() {
     private fun setupNavigation() {
         viewModel.authorProfileEvent.observe(viewLifecycleOwner, EventObserver {
             val action = PictureDetailFragmentDirections
-                .actionPictureDetailFragmentToAuthorProfileFragment(
+                .actionPictureDetailToAuthorProfile(
                     args.picture.getAuthorProfileLink(),
                     args.picture.author?.name
                 )

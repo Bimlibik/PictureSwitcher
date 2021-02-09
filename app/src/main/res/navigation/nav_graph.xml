@@ -9,8 +9,15 @@
         android:name="ru.bimlibik.pictureswitcher.ui.pictures.PicturesFragment"
         android:label="PicturesFragment">
         <action
-            android:id="@+id/action_pictures_fragment_to_picture_detail_fragment"
+            android:id="@+id/action_pictures_to_picture_detail"
             app:destination="@id/picture_detail_fragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+        <action
+            android:id="@+id/action_pictures_to_favorite_pictures"
+            app:destination="@id/favorite_pictures_fragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
@@ -26,7 +33,7 @@
             android:name="picture"
             app:argType="ru.bimlibik.pictureswitcher.data.Picture" />
         <action
-            android:id="@+id/action_picture_detail_fragment_to_authorProfileFragment"
+            android:id="@+id/action_picture_detail_to_author_profile"
             app:destination="@id/author_profile_fragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
@@ -46,6 +53,18 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="Author profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/favorite_pictures_fragment"
+        android:name="ru.bimlibik.pictureswitcher.ui.favorite_pictures.FavoritePicturesFragment"
+        android:label="FavoritePicturesFragment" >
+        <action
+            android:id="@+id/action_favorite_pictures_to_picture_detail"
+            app:destination="@id/picture_detail_fragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
     </fragment>
 
 </navigation>

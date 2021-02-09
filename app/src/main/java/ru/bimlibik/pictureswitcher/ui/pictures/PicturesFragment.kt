@@ -37,13 +37,14 @@ class PicturesFragment : Fragment() {
         setupAdapter()
         setupNavDrawerListener()
         setupNavigation()
-        setupToolbar()
+        setupToolbarNavigation()
+        setupToolbarMenu()
         setupRefreshLayout(viewDataBinding.swipe)
     }
 
     private fun setupNavigation() {
         viewModel.pictureDetailEvent.observe(viewLifecycleOwner, EventObserver {
-            val action = PicturesFragmentDirections.actionPicturesFragmentToPictureDetailFragment(it)
+            val action = PicturesFragmentDirections.actionPicturesToPictureDetail(it)
             findNavController().navigate(action)
         })
     }
@@ -53,22 +54,29 @@ class PicturesFragment : Fragment() {
         val drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawer_layout)
 
         navDrawer.setNavigationItemSelectedListener { item ->
-            viewModel.searchPictures(item.itemId, item.title.toString())
+            when(item.itemId) {
+                R.id.menu_nav_home -> viewModel.searchPictures(null)
+                R.id.menu_nav_favorite -> navigateToFavorites()
+                else -> viewModel.searchPictures(item.title.toString())
+            }
             drawerLayout.closeDrawers()
             true
         }
     }
 
-    private fun setupToolbar() {
+    private fun setupToolbarNavigation() {
         val drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawer_layout)
         viewDataBinding.toolbar.setNavigationOnClickListener { drawerLayout.open() }
+    }
+
+    private fun setupToolbarMenu() {
         viewDataBinding.toolbar.inflateMenu(R.menu.pictures_menu)
         val searchItem = viewDataBinding.toolbar.menu.findItem(R.id.menu_search)
         val searchView: SearchView = searchItem.actionView as SearchView
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { viewModel.searchPictures(searchView.id, it) }
+                query?.let { viewModel.searchPictures(it) }
                 return true
             }
 
@@ -83,7 +91,7 @@ class PicturesFragment : Fragment() {
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                viewModel.searchPictures(R.id.menu_nav_home, "")
+                viewModel.searchPictures(null)
                 return true
             }
         })
@@ -91,5 +99,10 @@ class PicturesFragment : Fragment() {
 
     private fun setupAdapter() {
         viewDataBinding.recycler.adapter = PicturesAdapter(viewModel)
+    }
+
+    private fun navigateToFavorites() {
+        val action = PicturesFragmentDirections.actionPicturesToFavoritePictures()
+        findNavController().navigate(action)
     }
 }

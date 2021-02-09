@@ -2,7 +2,6 @@ package ru.bimlibik.pictureswitcher.ui.pictures
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.Query
@@ -50,12 +49,8 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
         repository.open()
     }
 
-    fun searchPictures(itemId: Int, query: String) {
-        when (itemId) {
-            R.id.menu_nav_home -> updateQuery()
-            R.id.menu_nav_favorite -> updateQuery(Query(category = FAVORITES))
-            else -> updateQuery(Query(category = query))
-        }
+    fun searchPictures(newCategory: String?) {
+        updateQuery(Query(category = newCategory))
     }
 
     fun showDetail(picture: Picture) {
