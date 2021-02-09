@@ -11,7 +11,7 @@ import ru.bimlibik.pictureswitcher.R
 
 fun View.showSnackbar(message: String) {
     Snackbar
-        .make(this, message, Snackbar.LENGTH_LONG)
+        .make(this, message, Snackbar.LENGTH_SHORT)
         .show()
 }
 

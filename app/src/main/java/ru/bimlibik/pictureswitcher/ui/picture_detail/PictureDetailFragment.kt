@@ -102,6 +102,6 @@ class PictureDetailFragment : Fragment() {
     }
 
     private fun setupSnackbar() {
-        view?.setupSnackbar(this, viewModel.snackbarText)
+        viewDataBinding.root.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
     }
 }
