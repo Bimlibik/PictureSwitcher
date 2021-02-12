@@ -1,6 +1,8 @@
 package ru.bimlibik.pictureswitcher.utils
 
+import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
@@ -25,6 +27,13 @@ fun View.setupSnackbar(
             showSnackbar(context.getString(it))
         }
     })
+}
+
+fun View.hideKeyboard() {
+    this.post {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+    }
 }
 
 fun Fragment.setupRefreshLayout(swipe: SwipeRefreshLayout) {

@@ -16,6 +16,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.databinding.FragmentPictureDetailBinding
 import ru.bimlibik.pictureswitcher.utils.EventObserver
+import ru.bimlibik.pictureswitcher.utils.hideKeyboard
 import ru.bimlibik.pictureswitcher.utils.setupSnackbar
 import ru.bimlibik.pictureswitcher.workers.WallpaperWorker
 
@@ -36,6 +37,7 @@ class PictureDetailFragment : Fragment() {
             .apply {
                 viewModel = this@PictureDetailFragment.viewModel
                 item = args.picture
+                root.hideKeyboard()
             }
         return viewDataBinding.root
     }
