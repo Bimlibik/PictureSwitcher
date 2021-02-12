@@ -13,7 +13,7 @@ class PictureDetailViewModel(private val repository: IPicturesRepository) : View
     private val _picture = MutableLiveData<Picture>()
 
     val isFavorite: LiveData<Boolean> = _picture.switchMap { picture ->
-        repository.isFavorite(picture)
+        repository.isFavorite(picture).asLiveData()
     }
 
     private val _showScrim = MutableLiveData(false)
@@ -54,7 +54,7 @@ class PictureDetailViewModel(private val repository: IPicturesRepository) : View
     }
 
     fun showInfo(info: WorkInfo.State) {
-        when(info) {
+        when (info) {
             WorkInfo.State.SUCCEEDED -> {
                 _showScrim.value = false
                 _snackbarText.value = Event(R.string.snackbar_wallpaper_success)

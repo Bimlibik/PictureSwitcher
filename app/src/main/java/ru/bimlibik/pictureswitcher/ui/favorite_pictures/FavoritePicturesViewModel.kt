@@ -1,6 +1,7 @@
 package ru.bimlibik.pictureswitcher.ui.favorite_pictures
 
 import androidx.lifecycle.*
+import kotlinx.coroutines.flow.map
 import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.Result
@@ -9,7 +10,7 @@ import ru.bimlibik.pictureswitcher.utils.Event
 class FavoritePicturesViewModel(private val repository: IPicturesRepository) : ViewModel() {
 
     private val _pictures: LiveData<List<Picture>> = repository.getFavorites()
-        .distinctUntilChanged().switchMap { loadFromFavorites(it) }
+        .map { computeResult(it) }.asLiveData()
 
     val pictures: LiveData<List<Picture>> = _pictures
 
@@ -25,14 +26,11 @@ class FavoritePicturesViewModel(private val repository: IPicturesRepository) : V
         _pictureDetailEvent.value = Event(picture)
     }
 
-    private fun loadFromFavorites(picturesResult: Result<List<Picture>>): LiveData<List<Picture>> {
-        val result = MutableLiveData<List<Picture>>()
-
-        if (picturesResult is Result.Success) {
-            result.value = picturesResult.data
+    private fun computeResult(picturesResult: Result<List<Picture>>): List<Picture> {
+        return if (picturesResult is Result.Success) {
+            picturesResult.data
         } else {
-            result.value = emptyList()
+            emptyList()
         }
-        return result
     }
 }

@@ -5,10 +5,8 @@ import kotlinx.coroutines.launch
 import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.Query
-import ru.bimlibik.pictureswitcher.data.Result
 import ru.bimlibik.pictureswitcher.data.Result.Success
 import ru.bimlibik.pictureswitcher.utils.Event
-import ru.bimlibik.pictureswitcher.utils.FAVORITES
 
 class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel() {
 
@@ -23,12 +21,7 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
         if (query.forceUpdate) {
             _dataLoading.value = true
         }
-
-        if (query.category == FAVORITES) {
-            repository.getFavorites().distinctUntilChanged().switchMap { loadFromFavorites(it) }
-        } else {
-            loadPictures(query.category, query.page)
-        }
+        loadPictures(query.category, query.page)
     }
 
     val pictures: LiveData<List<Picture>> = _pictures
@@ -72,19 +65,6 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
             page = query.page
         }
         _trigger.value = currentQuery
-    }
-
-    private fun loadFromFavorites(picturesResult: Result<List<Picture>>): LiveData<List<Picture>> {
-        val result = MutableLiveData<List<Picture>>()
-
-        if (picturesResult is Success) {
-            result.value = picturesResult.data
-        } else {
-            result.value = emptyList()
-        }
-
-        _dataLoading.value = false
-        return result
     }
 
     private fun loadPictures(query: String?, page: Int): LiveData<List<Picture>> {

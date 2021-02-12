@@ -1,9 +1,8 @@
 package ru.bimlibik.pictureswitcher.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import ru.bimlibik.pictureswitcher.data.Result.*
 import ru.bimlibik.pictureswitcher.utils.DEFAULT_PAGE
@@ -27,10 +26,10 @@ class PicturesRepository(
             }
         }
 
-    override fun getFavorites(): LiveData<Result<List<Picture>>> =
-        picturesLocalDataSource.getFavoritePictures().map { Success(it) }
+    override fun getFavorites(): Flow<Result<List<Picture>>> =
+        picturesLocalDataSource.getFavoritePictures()
 
-    override fun isFavorite(picture: Picture): LiveData<Boolean> =
+    override fun isFavorite(picture: Picture): Flow<Boolean> =
         picturesLocalDataSource.isFavorite(picture)
 
     override suspend fun updateFavorite(picture: Picture): Boolean =

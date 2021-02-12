@@ -1,6 +1,6 @@
 package ru.bimlibik.pictureswitcher.data
 
-import androidx.lifecycle.LiveData
+import kotlinx.coroutines.flow.Flow
 
 interface PicturesDataSource {
 
@@ -12,9 +12,9 @@ interface PicturesDataSource {
 
         fun updateFavorite(picture: Picture): Boolean
 
-        fun getFavoritePictures(): LiveData<List<Picture>>
+        fun getFavoritePictures(): Flow<Result<List<Picture>>>
 
-        fun isFavorite(picture: Picture): LiveData<Boolean>
+        fun isFavorite(picture: Picture): Flow<Boolean>
 
         fun open()
 

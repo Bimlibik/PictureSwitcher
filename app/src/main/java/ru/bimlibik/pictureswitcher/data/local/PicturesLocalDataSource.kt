@@ -1,25 +1,34 @@
 package ru.bimlibik.pictureswitcher.data.local
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
 import io.realm.Realm
 import io.realm.kotlin.toFlow
 import io.realm.kotlin.where
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.PicturesDataSource
+import ru.bimlibik.pictureswitcher.data.Result
+import ru.bimlibik.pictureswitcher.data.Result.Success
 
 class PicturesLocalDataSource : PicturesDataSource.Local {
 
     private lateinit var defaultRealm: Realm
 
-    override fun getFavoritePictures(): LiveData<List<Picture>> =
-        liveData {
+    /**
+     * Changed livedata to flow because livedata was causing an error:
+    "java.lang.IllegalStateException: Cancel call cannot happen without a maybeRun"
+    More about issue here: https://stackoverflow.com/questions/61463006/java-lang-illegalstateexception-cancel-call-cannot-happen-without-a-mayberun
+
+    need to test
+     */
+    override fun getFavoritePictures(): Flow<Result<List<Picture>>> =
+        flow {
             defaultRealm.where<Picture>()
                 .findAllAsync()
                 .toFlow()
-                .collect { emit(it.toList()) }
+                .collect { emit(Success(it.toList())) }
         }
 
     override fun updateFavorite(picture: Picture): Boolean {
@@ -41,8 +50,8 @@ class PicturesLocalDataSource : PicturesDataSource.Local {
         return isFavorite
     }
 
-    override fun isFavorite(picture: Picture): LiveData<Boolean> =
-        liveData {
+    override fun isFavorite(picture: Picture): Flow<Boolean> =
+        flow {
             defaultRealm.where<Picture>()
                 .equalTo("id", picture.id)
                 .findAllAsync()
