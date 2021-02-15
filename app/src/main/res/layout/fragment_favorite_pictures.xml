@@ -54,13 +54,13 @@
             <ImageView
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:src="@drawable/ic_image"
+                android:src="@drawable/ic_favorite_fill"
                 android:layout_gravity="center" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_pictures_not_found"
+                android:text="@string/label_favorite_pictures_not_found"
                 android:textSize="24sp"
                 android:textColor="@color/colorWhite" />
         </LinearLayout>
