@@ -11,6 +11,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.databinding.FragmentPicturesBinding
 import ru.bimlibik.pictureswitcher.utils.EventObserver
+import ru.bimlibik.pictureswitcher.utils.hideKeyboard
 import ru.bimlibik.pictureswitcher.utils.setupRefreshLayout
 
 class PicturesFragment : Fragment() {
@@ -24,7 +25,10 @@ class PicturesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         viewDataBinding = FragmentPicturesBinding.inflate(inflater, container, false)
-            .apply { viewModel = this@PicturesFragment.viewModel }
+            .apply {
+                viewModel = this@PicturesFragment.viewModel
+                root.hideKeyboard()
+            }
         setHasOptionsMenu(true)
         return viewDataBinding.root
     }
@@ -54,7 +58,7 @@ class PicturesFragment : Fragment() {
         val drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawer_layout)
 
         navDrawer.setNavigationItemSelectedListener { item ->
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.menu_nav_home -> viewModel.searchPictures(null)
                 R.id.menu_nav_favorite -> navigateToFavorites()
                 else -> viewModel.searchPictures(item.title.toString())
