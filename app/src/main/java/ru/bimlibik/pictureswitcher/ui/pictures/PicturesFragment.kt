@@ -76,7 +76,7 @@ class PicturesFragment : Fragment() {
     private fun setupToolbarMenu() {
         viewDataBinding.toolbar.inflateMenu(R.menu.pictures_menu)
         val searchItem = viewDataBinding.toolbar.menu.findItem(R.id.menu_search)
-        val searchView: SearchView = searchItem.actionView as SearchView
+        val searchView = searchItem.actionView as SearchView
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
