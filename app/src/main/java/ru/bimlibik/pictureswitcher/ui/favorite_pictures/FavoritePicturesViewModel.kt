@@ -7,7 +7,7 @@ import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.Result
 import ru.bimlibik.pictureswitcher.utils.Event
 
-class FavoritePicturesViewModel(private val repository: IPicturesRepository) : ViewModel() {
+class FavoritePicturesViewModel(repository: IPicturesRepository) : ViewModel() {
 
     private val _pictures: LiveData<List<Picture>> = repository.getFavorites()
         .map { computeResult(it) }.asLiveData()
