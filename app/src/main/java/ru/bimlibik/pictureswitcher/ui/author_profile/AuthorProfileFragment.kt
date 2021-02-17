@@ -19,7 +19,7 @@ class AuthorProfileFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding = FragmentAuthorProfileBinding
             .inflate(inflater, container, false)
         return viewDataBinding.root
