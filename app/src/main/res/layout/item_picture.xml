@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:pictures_preview="@{item}"
-        android:onClick="@{()-> viewModel.showDetail(item)}"/>
+        android:onClick="@{()-> viewModel.showDetail(item)}"
+        android:contentDescription="@string/content_description_default"/>
 
 </layout>

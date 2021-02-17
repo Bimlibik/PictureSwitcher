@@ -66,7 +66,8 @@
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:src="@drawable/ic_image"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:contentDescription="@string/content_description_default"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -81,7 +82,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:picture_preview="@{item.pictureLink}"
-            app:error="@{errorLayout}" />
+            app:error="@{errorLayout}"
+            android:contentDescription="@string/content_description_default"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -111,7 +113,8 @@
                     android:layout_height="50dp"
                     android:layout_marginEnd="16dp"
                     android:src="@drawable/state_info"
-                    android:onClick="@{()-> viewModel.showAuthorProfile()}" />
+                    android:onClick="@{()-> viewModel.showAuthorProfile()}"
+                    android:contentDescription="@string/content_description_author_profile"/>
 
                 <ImageView
                     android:id="@+id/btn_favorite"
@@ -119,14 +122,16 @@
                     android:layout_height="50dp"
                     android:layout_marginEnd="16dp"
                     android:src="@{viewModel.isFavorite ? @drawable/state_favorite_fill : @drawable/state_favorite}"
-                    android:onClick="@{()-> viewModel.updateFavorite()}" />
+                    android:onClick="@{()-> viewModel.updateFavorite()}"
+                    android:contentDescription="@string/content_description_favorite" />
 
                 <ImageView
                     android:id="@+id/btn_wallpaper"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/state_check"
-                    android:onClick="@{()-> viewModel.setPictureAsWallpaper()}" />
+                    android:onClick="@{()-> viewModel.setPictureAsWallpaper()}"
+                    android:contentDescription="@string/content_description_wallpaper"/>
             </LinearLayout>
 
         </LinearLayout>

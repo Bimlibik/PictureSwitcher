@@ -11,4 +11,9 @@
     <string name="snackbar_removed_from_favorites">Removed from favorites</string>
     <string name="snackbar_wallpaper_success">Wallpaper has been successfully updated</string>
     <string name="snackbar_wallpaper_error">Error while setting wallpaper</string>
+    <string name="content_description_default">Image</string>
+    <string name="content_description_author_profile">Author profile</string>
+    <string name="content_description_favorite">Add to favorites</string>
+    <string name="content_description_wallpaper">Set picture as wallpaper</string>
+    <string name="content_description_logo">Logo</string>
 </resources>
