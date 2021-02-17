@@ -40,6 +40,6 @@ open class Author(
         if (username == null) {
             return "https://unsplash.com/?utm_source=pictureswitcher&utm_medium=referral"
         }
-        return "https://unsplash.com/@$username?utm_source=your_app_name&utm_medium=referral"
+        return "https://unsplash.com/@$username?utm_source=pictureswitcher&utm_medium=referral"
     }
 }
