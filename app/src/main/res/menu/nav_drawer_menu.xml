@@ -4,130 +4,130 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_nav_home"
-            android:title="Home"
+            android:title="@string/label_nav_home"
             android:icon="@drawable/ic_home"
             android:checked="true"/>
 
         <item
             android:id="@+id/menu_nav_favorite"
-            android:title="Favorites"
+            android:title="@string/label_favorites"
             android:icon="@drawable/ic_favorite_fill"
             android:checkable="false"/>
     </group>
 
-    <item android:title="Categories">
+    <item android:title="@string/label_nav_categories">
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/menu_cat_all"
-                    android:title="Abstraction" />
+                    android:id="@+id/menu_cat_abstraction"
+                    android:title="@string/label_nav_abstraction" />
 
                 <item
                     android:id="@+id/menu_cat_animals"
-                    android:title="Animals" />
+                    android:title="@string/label_nav_animals" />
 
                 <item
                     android:id="@+id/menu_cat_architecture"
-                    android:title="Architecture" />
+                    android:title="@string/label_nav_architecture" />
 
                 <item
-                    android:id="@+id/menu_cat_arts_and_culture"
-                    android:title="Arts" />
+                    android:id="@+id/menu_cat_arts"
+                    android:title="@string/label_nav_arts" />
 
                 <item
                     android:id="@+id/menu_cat_business_and_work"
-                    android:title="Business and Work" />
+                    android:title="@string/label_nav_business_and_work" />
 
                 <item
                     android:id="@+id/menu_cat_cars"
-                    android:title="Cars" />
+                    android:title="@string/label_nav_cars" />
 
                 <item
                     android:id="@+id/menu_cat_fall"
-                    android:title="Fall" />
+                    android:title="@string/label_nav_fall" />
 
                 <item
                     android:id="@+id/menu_cat_fashion"
-                    android:title="Fashion" />
+                    android:title="@string/label_nav_fashion" />
 
                 <item
                     android:id="@+id/menu_cat_film"
-                    android:title="Film" />
+                    android:title="@string/label_nav_film" />
 
                 <item
                     android:id="@+id/menu_cat_flowers"
-                    android:title="Flowers" />
+                    android:title="@string/label_nav_flowers" />
 
                 <item
                     android:id="@+id/menu_cat_food_and_drink"
-                    android:title="Food and Drink" />
+                    android:title="@string/label_nav_food_and_drink" />
 
                 <item
                     android:id="@+id/menu_cat_holidays"
-                    android:title="Holidays" />
+                    android:title="@string/label_nav_holidays" />
 
                 <item
                     android:id="@+id/menu_cat_interiors"
-                    android:title="Interiors" />
+                    android:title="@string/label_nav_interiors" />
 
                 <item
                     android:id="@+id/menu_cat_macro"
-                    android:title="Macro" />
+                    android:title="@string/label_nav_macro" />
 
                 <item
                     android:id="@+id/menu_cat_minimalism"
-                    android:title="Minimalism" />
+                    android:title="@string/label_nav_minimalism" />
 
                 <item
                     android:id="@+id/menu_cat_music"
-                    android:title="Music" />
+                    android:title="@string/label_nav_music" />
 
                 <item
                     android:id="@+id/menu_cat_nature"
-                    android:title="Nature" />
+                    android:title="@string/label_nav_nature" />
 
                 <item
                     android:id="@+id/menu_cat_people"
-                    android:title="People" />
+                    android:title="@string/label_nav_people" />
 
                 <item
                     android:id="@+id/menu_cat_romantic"
-                    android:title="Romantic" />
-
-                <item
-                    android:id="@+id/menu_cat_summer"
-                    android:title="Summer" />
+                    android:title="@string/label_nav_romantic" />
 
                 <item
                     android:id="@+id/menu_cat_space"
-                    android:title="Space" />
+                    android:title="@string/label_nav_space" />
 
                 <item
                     android:id="@+id/menu_cat_sport"
-                    android:title="Sport" />
+                    android:title="@string/label_nav_sport" />
 
                 <item
                     android:id="@+id/menu_cat_spring"
-                    android:title="Spring" />
+                    android:title="@string/label_nav_spring" />
 
                 <item
                     android:id="@+id/menu_cat_street"
-                    android:title="Street" />
+                    android:title="@string/label_nav_street" />
+
+                <item
+                    android:id="@+id/menu_cat_summer"
+                    android:title="@string/label_nav_summer" />
 
                 <item
                     android:id="@+id/menu_cat_technology"
-                    android:title="Technology" />
+                    android:title="@string/label_nav_technology" />
 
                 <item
                     android:id="@+id/menu_cat_travel"
-                    android:title="Travel" />
+                    android:title="@string/label_nav_travel" />
 
                 <item
                     android:id="@+id/menu_cat_textures"
-                    android:title="Textures" />
+                    android:title="@string/label_nav_textures" />
                 <item
                     android:id="@+id/menu_cat_winter"
-                    android:title="Winter" />
+                    android:title="@string/label_nav_winter" />
             </group>
 
         </menu>

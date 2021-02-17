@@ -1,16 +1,54 @@
 <resources>
     <string name="app_name">Picture Switcher</string>
+
     <string name="label_pictures_not_found">Pictures not found</string>
+    <string name="label_favorites">Favorites</string>
     <string name="label_favorite_pictures_not_found">No pictures in favorites</string>
     <string name="label_picture_not_found">Picture not found</string>
     <string name="label_author">Photo by %s on Unsplash</string>
     <string name="label_dialog_title">Set picture as wallpaper?</string>
     <string name="label_ok">OK</string>
     <string name="label_cancel">Cancel</string>
+    <string name="label_search">Search</string>
+
+    <string name="label_nav_home">Home</string>
+    <string name="label_nav_categories">Categories</string>
+    <string name="label_nav_abstraction">Abstraction</string>
+    <string name="label_nav_animals">Animals</string>
+    <string name="label_nav_architecture">Architecture</string>
+    <string name="label_nav_arts">Arts</string>
+    <string name="label_nav_business_and_work">Business and Work</string>
+    <string name="label_nav_cars">Cars</string>
+    <string name="label_nav_fall">Fall</string>
+    <string name="label_nav_fashion">Fashion</string>
+    <string name="label_nav_film">Film</string>
+    <string name="label_nav_flowers">Flowers</string>
+    <string name="label_nav_food_and_drink">Food and Drink</string>
+    <string name="label_nav_holidays">Holidays</string>
+    <string name="label_nav_interiors">Interiors</string>
+    <string name="label_nav_macro">Macro</string>
+    <string name="label_nav_minimalism">Minimalism</string>
+    <string name="label_nav_music">Music</string>
+    <string name="label_nav_nature">Nature</string>
+    <string name="label_nav_people">People</string>
+    <string name="label_nav_romantic">Romantic</string>
+    <string name="label_nav_space">Space</string>
+    <string name="label_nav_sport">Sport</string>
+    <string name="label_nav_spring">Spring</string>
+    <string name="label_nav_street">Street</string>
+    <string name="label_nav_summer">Summer</string>
+    <string name="label_nav_technology">Technology</string>
+    <string name="label_nav_travel">Travel</string>
+    <string name="label_nav_textures">Textures</string>
+    <string name="label_nav_winter">Winter</string>
+
+
+
     <string name="snackbar_added_to_favorites">Added to favorites</string>
     <string name="snackbar_removed_from_favorites">Removed from favorites</string>
     <string name="snackbar_wallpaper_success">Wallpaper has been successfully updated</string>
     <string name="snackbar_wallpaper_error">Error while setting wallpaper</string>
+
     <string name="content_description_default">Image</string>
     <string name="content_description_author_profile">Author profile</string>
     <string name="content_description_favorite">Add to favorites</string>
