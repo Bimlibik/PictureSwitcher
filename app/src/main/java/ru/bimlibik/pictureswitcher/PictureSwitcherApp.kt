@@ -6,6 +6,9 @@ import io.realm.RealmConfiguration
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import timber.log.Timber
+import timber.log.Timber.DebugTree
+
 
 class PictureSwitcherApp : Application() {
 
@@ -26,6 +29,10 @@ class PictureSwitcherApp : Application() {
             .name("favorite_pictures.realm")
             .build()
         Realm.setDefaultConfiguration(config)
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        }
     }
 
     companion object {
