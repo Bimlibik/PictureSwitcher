@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import ru.bimlibik.pictureswitcher.data.Result.*
-import ru.bimlibik.pictureswitcher.utils.DEFAULT_PAGE
+import timber.log.Timber
 
 class PicturesRepository(
     private val picturesRemoteDataSource: PicturesDataSource.Remote,
@@ -15,16 +15,28 @@ class PicturesRepository(
 
     private val cache = mutableListOf<Picture>()
 
-    override suspend fun getPictures(query: String?, page: Int): Result<List<Picture>> =
+    override suspend fun getPictures(
+        query: String?,
+        lastItemKey: String?,
+        callback: (Result<List<Picture>>) -> Unit
+    ) {
         withContext(ioDispatcher) {
-            val result = picturesRemoteDataSource.getPictures(query, page)
-            if (result is Success) {
-                refreshCache(result.data, page == DEFAULT_PAGE)
-                return@withContext Success(getCache())
-            } else {
-                return@withContext result
+            if (query == null) {
+                picturesRemoteDataSource.getAllPictures(lastItemKey) { result ->
+                    if (result is Success) {
+                        Timber.i("Pictures successfully uploaded from remote data source.")
+                        refreshCache(result.data, lastItemKey == null)
+                        callback(Success(getCache()))
+                    } else {
+                        Timber.e("Error while loading pictures from remote data source: $result")
+                        callback(result)
+                    }
+                }
+                return@withContext
             }
+//            TODO(There should be an image search)
         }
+    }
 
     override fun getFavorites(): Flow<Result<List<Picture>>> =
         picturesLocalDataSource.getFavoritePictures()

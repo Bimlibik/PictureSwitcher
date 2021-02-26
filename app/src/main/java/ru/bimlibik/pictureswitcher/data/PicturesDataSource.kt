@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.Flow
 interface PicturesDataSource {
 
     interface Remote {
-        suspend fun getPictures(query: String?, page: Int): Result<List<Picture>>
+
+        suspend fun getAllPictures(lastItemKey: String?, callback: (Result<List<Picture>>) -> Unit)
+
     }
 
     interface Local {

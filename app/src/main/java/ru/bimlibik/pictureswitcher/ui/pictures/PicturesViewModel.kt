@@ -7,6 +7,7 @@ import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.Query
 import ru.bimlibik.pictureswitcher.data.Result.Success
 import ru.bimlibik.pictureswitcher.utils.Event
+import timber.log.Timber
 
 class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel() {
 
@@ -21,7 +22,7 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
         if (query.forceUpdate) {
             _dataLoading.value = true
         }
-        loadPictures(query.category, query.page)
+        loadPictures(query.category, null)
     }
 
     val pictures: LiveData<List<Picture>> = _pictures
@@ -67,20 +68,21 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
         _trigger.value = currentQuery
     }
 
-    private fun loadPictures(query: String?, page: Int): LiveData<List<Picture>> {
+    private fun loadPictures(query: String?, lastItemKey: String?): LiveData<List<Picture>> {
         val result = MutableLiveData<List<Picture>>()
 
         viewModelScope.launch {
-            val remoteResult = repository.getPictures(query, page)
-
-            if (remoteResult is Success) {
-                result.value = remoteResult.data
-            } else {
-                result.value = emptyList()
+            repository.getPictures(query, lastItemKey) { remoteResult ->
+                if (remoteResult is Success) {
+                    Timber.i("Pictures uploaded successfully.")
+                    result.value = remoteResult.data
+                } else {
+                    Timber.e("Error while loading pictures: $remoteResult")
+                    result.value = emptyList()
+                }
             }
             _dataLoading.value = false
         }
-
         return result
     }
 }
