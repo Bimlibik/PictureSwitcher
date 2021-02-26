@@ -3,7 +3,6 @@ package ru.bimlibik.pictureswitcher.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -17,9 +16,9 @@ import com.bumptech.glide.request.target.Target
 import ru.bimlibik.pictureswitcher.GlideApp
 import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.data.Picture
+import timber.log.Timber
 import java.io.IOException
 
-private const val TAG = "GlideExt"
 
 fun Context.getBitmap(url: String?): Bitmap? {
     if (url == null) return null
@@ -32,7 +31,7 @@ fun Context.getBitmap(url: String?): Bitmap? {
             .submit(displayMetrics.widthPixels, displayMetrics.heightPixels)
             .get()
     } catch (e: IOException) {
-        Log.i(TAG, "Error while loading picture^ $e")
+        Timber.e("Error while loading picture: $e")
         null
     }
 }
@@ -43,7 +42,7 @@ fun ImageView.setSmallPicture(picture: Picture) {
     val height = this.height
     GlideApp.with(this.context)
         .asBitmap()
-        .load(picture.urls?.small)
+        .load(picture.url)
         .centerCrop()
         .override(width, height)
         .thumbnail(0.2f)
@@ -89,7 +88,7 @@ private fun getRequestListener(picture: Picture) = object : RequestListener<Bitm
         target: Target<Bitmap>?,
         isFirstResource: Boolean
     ): Boolean {
-        Log.e(TAG, "Error while loading picture^ $e")
+        Timber.e("Error while loading picture: $e")
         return false
     }
 
@@ -106,35 +105,36 @@ private fun getRequestListener(picture: Picture) = object : RequestListener<Bitm
                 picture.color = palette.darkMutedSwatch?.rgb ?: android.R.color.transparent
             }
         } catch (e: IllegalStateException) {
-            Log.i(TAG, "Picture color already exists.")
+            Timber.d("Picture color already exists.")
         }
         return false
     }
 }
 
-private fun getRequestListener(imageView: ImageView, errorLayout: LinearLayout) = object : RequestListener<Drawable> {
+private fun getRequestListener(imageView: ImageView, errorLayout: LinearLayout) =
+    object : RequestListener<Drawable> {
 
-    override fun onLoadFailed(
-        e: GlideException?,
-        model: Any?,
-        target: Target<Drawable>?,
-        isFirstResource: Boolean
-    ): Boolean {
-        Log.e(TAG, "Error while loading picture^ $e")
-        imageView.visibility = View.GONE
-        errorLayout.visibility = View.VISIBLE
-        return false
-    }
+        override fun onLoadFailed(
+            e: GlideException?,
+            model: Any?,
+            target: Target<Drawable>?,
+            isFirstResource: Boolean
+        ): Boolean {
+            Timber.e("Error while loading picture: $e")
+            imageView.visibility = View.GONE
+            errorLayout.visibility = View.VISIBLE
+            return false
+        }
 
-    override fun onResourceReady(
-        resource: Drawable?,
-        model: Any?,
-        target: Target<Drawable>?,
-        dataSource: DataSource?,
-        isFirstResource: Boolean
-    ): Boolean {
-        imageView.visibility = View.VISIBLE
-        errorLayout.visibility = View.GONE
-        return false
+        override fun onResourceReady(
+            resource: Drawable?,
+            model: Any?,
+            target: Target<Drawable>?,
+            dataSource: DataSource?,
+            isFirstResource: Boolean
+        ): Boolean {
+            imageView.visibility = View.VISIBLE
+            errorLayout.visibility = View.GONE
+            return false
+        }
     }
-}
