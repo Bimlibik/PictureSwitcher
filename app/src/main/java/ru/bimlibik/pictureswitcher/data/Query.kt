@@ -1,13 +1,27 @@
 package ru.bimlibik.pictureswitcher.data
 
-import ru.bimlibik.pictureswitcher.utils.DEFAULT_PAGE
+import ru.bimlibik.pictureswitcher.utils.NO_KEY
 
 
 data class Query(
     var forceUpdate: Boolean = false,
     var category: String? = null,
-    var page: Int = DEFAULT_PAGE
+    var key: String? = null
 ) {
-    val nextPage: Int
-        get() = ++page
+    val lastItemKey: String?
+        get() {
+            val newKey = key
+
+            if (newKey == null) {
+                return null
+            } else {
+                if (newKey.toInt() <= 0) {
+                    return NO_KEY
+                }
+                return (newKey.toInt() - 1).toString()
+            }
+        }
+
+    val isLastPage: Boolean
+        get() = lastItemKey == NO_KEY
 }
