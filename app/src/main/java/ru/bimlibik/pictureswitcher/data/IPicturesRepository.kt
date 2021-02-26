@@ -1,13 +1,14 @@
 package ru.bimlibik.pictureswitcher.data
 
 import kotlinx.coroutines.flow.Flow
+import ru.bimlibik.pictureswitcher.data.remote.PictureResponse
 
 interface IPicturesRepository {
 
     suspend fun getPictures(
         query: String?,
         lastItemKey: String?,
-        callback: (Result<List<Picture>>) -> Unit
+        callback: (Result<PictureResponse>) -> Unit
     )
 
     suspend fun updateFavorite(picture: Picture): Boolean

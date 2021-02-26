@@ -8,11 +8,7 @@ import ru.bimlibik.pictureswitcher.data.Picture
 @Serializable
 data class PictureResponse(
 
-    @SerialName("total")
-    val totalPictures: Int,
-
-    @SerialName("total_pages")
-    val totalPages: Int,
+    val key: String?,
 
     @SerialName("results")
     val pictures: List<Picture>

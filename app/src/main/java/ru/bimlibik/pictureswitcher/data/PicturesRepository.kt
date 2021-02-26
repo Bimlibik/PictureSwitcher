@@ -5,6 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import ru.bimlibik.pictureswitcher.data.Result.*
+import ru.bimlibik.pictureswitcher.data.remote.PictureResponse
 import timber.log.Timber
 
 class PicturesRepository(
@@ -18,15 +19,15 @@ class PicturesRepository(
     override suspend fun getPictures(
         query: String?,
         lastItemKey: String?,
-        callback: (Result<List<Picture>>) -> Unit
+        callback: (Result<PictureResponse>) -> Unit
     ) {
         withContext(ioDispatcher) {
             if (query == null) {
                 picturesRemoteDataSource.getAllPictures(lastItemKey) { result ->
                     if (result is Success) {
                         Timber.i("Pictures successfully uploaded from remote data source.")
-                        refreshCache(result.data, lastItemKey == null)
-                        callback(Success(getCache()))
+                        refreshCache(result.data.pictures, lastItemKey == null)
+                        callback(Success(PictureResponse(result.data.key, getCache())))
                     } else {
                         Timber.e("Error while loading pictures from remote data source: $result")
                         callback(result)

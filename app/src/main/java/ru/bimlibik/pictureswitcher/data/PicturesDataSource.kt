@@ -1,12 +1,13 @@
 package ru.bimlibik.pictureswitcher.data
 
 import kotlinx.coroutines.flow.Flow
+import ru.bimlibik.pictureswitcher.data.remote.PictureResponse
 
 interface PicturesDataSource {
 
     interface Remote {
 
-        suspend fun getAllPictures(lastItemKey: String?, callback: (Result<List<Picture>>) -> Unit)
+        suspend fun getAllPictures(lastItemKey: String?, callback: (Result<PictureResponse>) -> Unit)
 
     }
 

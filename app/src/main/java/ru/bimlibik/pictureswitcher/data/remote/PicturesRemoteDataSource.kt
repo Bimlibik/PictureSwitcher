@@ -1,6 +1,6 @@
 package ru.bimlibik.pictureswitcher.data.remote
 
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
@@ -21,43 +21,39 @@ class PicturesRemoteDataSource(
 
     override suspend fun getAllPictures(
         lastItemKey: String?,
-        callback: (Result<List<Picture>>) -> Unit
+        callback: (Result<PictureResponse>) -> Unit
     ) {
         withContext(ioDispatcher) {
             val result = mutableListOf<Picture>()
+            getQuery(lastItemKey).addListenerForSingleValueEvent(object : ValueEventListener {
 
-            if (lastItemKey == null) {
-                picturesRef
-                    .orderByKey()
-                    .limitToLast(ITEMS_PER_PAGE)
-                    .get()
-                    .addOnSuccessListener { dataSnapshot ->
-                        dataSnapshot.children.mapNotNullTo(result) { it.getValue<Picture>() }
-                        result.reverse()
-                        Timber.i("Pictures uploaded successfully.")
-                        callback(Success(result))
-                    }
-                    .addOnFailureListener {
-                        Timber.e("Error while loading pictures: $it")
-                        callback(Error(it))
-                    }
-            } else {
-                picturesRef
-                    .orderByKey()
-                    .endAt(lastItemKey)
-                    .limitToLast(ITEMS_PER_PAGE)
-                    .get()
-                    .addOnSuccessListener { dataSnapshot ->
-                        dataSnapshot.children.mapNotNullTo(result) { it.getValue<Picture>() }
-                        result.reverse()
-                        Timber.i("Pictures uploaded successfully.")
-                        callback(Success(result))
-                    }
-                    .addOnFailureListener {
-                        Timber.e("Error while loading pictures: $it")
-                        callback(Error(it))
-                    }
-            }
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.mapNotNullTo(result) { it.getValue<Picture>() }
+                    result.reverse()
+                    val key = snapshot.children.first().key
+                    Timber.i("Pictures uploaded successfully. lastItemKey = $lastItemKey, key = $key")
+                    callback(Success(PictureResponse(key, result)))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.e("Error while loading pictures: $error")
+                    callback(Error(error.toException()))
+                }
+
+            })
+        }
+    }
+
+    private fun getQuery(key: String?): Query {
+        return if (key == null) {
+            picturesRef
+                .orderByKey()
+                .limitToLast(ITEMS_PER_PAGE)
+        } else {
+            picturesRef
+                .orderByKey()
+                .endAt(key)
+                .limitToLast(ITEMS_PER_PAGE)
         }
     }
 

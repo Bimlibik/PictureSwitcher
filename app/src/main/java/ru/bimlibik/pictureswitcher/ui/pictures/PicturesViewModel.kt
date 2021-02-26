@@ -22,7 +22,7 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
         if (query.forceUpdate) {
             _dataLoading.value = true
         }
-        loadPictures(query.category, null)
+        loadPictures(query.category, query.key)
     }
 
     val pictures: LiveData<List<Picture>> = _pictures
@@ -52,20 +52,29 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
     }
 
     fun loadMore() {
-        updateQuery(Query(category = currentQuery.category, page = currentQuery.nextPage))
+        if (currentQuery.isLastPage) {
+            Timber.i("The user scrolled to the last page.")
+            return
+        }
+        updateQuery(Query(category = currentQuery.category, key = currentQuery.lastItemKey))
     }
 
+    /**
+     * Swipe to refresh does not work correctly with firebase, therefore temporarily disabled.
+     */
     fun refresh() {
-        updateQuery(Query(forceUpdate = true, category = currentQuery.category))
+        _dataLoading.value = false
+//        updateQuery(Query(forceUpdate = true, category = currentQuery.category))
     }
 
     private fun updateQuery(query: Query = Query()) {
         currentQuery.apply {
             forceUpdate = query.forceUpdate
             category = query.category
-            page = query.page
+            key = query.key
         }
         _trigger.value = currentQuery
+        Timber.i("Query updated: $currentQuery")
     }
 
     private fun loadPictures(query: String?, lastItemKey: String?): LiveData<List<Picture>> {
@@ -74,8 +83,9 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
         viewModelScope.launch {
             repository.getPictures(query, lastItemKey) { remoteResult ->
                 if (remoteResult is Success) {
-                    Timber.i("Pictures uploaded successfully.")
-                    result.value = remoteResult.data
+                    Timber.i("Pictures uploaded successfully. Remote result size - ${remoteResult.data.pictures.size}")
+                    result.value = remoteResult.data.pictures
+                    currentQuery.key = remoteResult.data.key
                 } else {
                     Timber.e("Error while loading pictures: $remoteResult")
                     result.value = emptyList()
