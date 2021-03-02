@@ -4,21 +4,15 @@ import android.os.Parcelable
 import io.realm.RealmModel
 import io.realm.annotations.RealmClass
 import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
 @Parcelize
 @RealmClass(embedded = true)
 open class Author(
 
-    @SerialName("id")
     var id: String? = null,
 
-    @SerialName("name")
     var name: String? = null,
 
-    @SerialName("username")
     var username: String? = null
 
 ) : Parcelable, RealmModel {
