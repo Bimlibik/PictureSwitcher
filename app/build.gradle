@@ -90,7 +90,7 @@ dependencies {
 
     //firebase
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
-    implementation 'com.google.firebase:firebase-database-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
     // timber
     implementation 'com.jakewharton.timber:timber:4.7.1'

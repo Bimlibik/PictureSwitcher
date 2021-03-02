@@ -40,7 +40,7 @@ open class Picture(
 
     @Transient
     @Ignore
-    var tags: @RawValue List<Tag> = emptyList()
+    var tags: @RawValue List<String> = emptyList()
 
 ) : Parcelable, RealmModel {
 
@@ -65,7 +65,7 @@ open class Picture(
         blurHash: String? = this.blurHash,
         url: String? = this.url,
         source: String? = this.source,
-        tags: List<Tag> = this.tags
+        tags: List<String> = this.tags
     ) =
         Picture(id, author, color, category, blurHash, url, source, tags)
 

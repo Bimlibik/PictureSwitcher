@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.databinding.ItemPictureBinding
+import timber.log.Timber
 
-class PicturesAdapter(private val viewModel: PicturesViewModel)
-    : ListAdapter<Picture, PicturesAdapter.PictureViewHolder>(PictureDiffCallback()) {
+class PicturesAdapter(private val viewModel: PicturesViewModel) :
+    ListAdapter<Picture, PicturesAdapter.PictureViewHolder>(PictureDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PictureViewHolder {
         val binding = ItemPictureBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -17,6 +18,7 @@ class PicturesAdapter(private val viewModel: PicturesViewModel)
     }
 
     override fun onBindViewHolder(holder: PictureViewHolder, position: Int) {
+        Timber.i("onBindViewHolder, position = $position")
         if (position >= itemCount - 1) {
             viewModel.loadMore()
         }

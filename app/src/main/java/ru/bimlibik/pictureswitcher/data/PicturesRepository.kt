@@ -1,5 +1,6 @@
 package ru.bimlibik.pictureswitcher.data
 
+import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -18,24 +19,20 @@ class PicturesRepository(
 
     override suspend fun getPictures(
         query: String?,
-        lastItemKey: String?,
+        lastVisiblePicture: DocumentSnapshot?,
         callback: (Result<PictureResponse>) -> Unit
     ) {
         withContext(ioDispatcher) {
-            if (query == null) {
-                picturesRemoteDataSource.getAllPictures(lastItemKey) { result ->
-                    if (result is Success) {
-                        Timber.i("Pictures successfully uploaded from remote data source.")
-                        refreshCache(result.data.pictures, lastItemKey == null)
-                        callback(Success(PictureResponse(result.data.key, getCache())))
-                    } else {
-                        Timber.e("Error while loading pictures from remote data source: $result")
-                        callback(result)
-                    }
+            picturesRemoteDataSource.getPictures(query, lastVisiblePicture) { result ->
+                if (result is Success) {
+                    Timber.i("Pictures successfully uploaded from remote data source.")
+                    refreshCache(result.data.pictures, lastVisiblePicture == null)
+                    callback(Success(PictureResponse(getCache(), result.data.lastVisiblePicture)))
+                } else {
+                    Timber.e("Error while loading pictures from remote data source: $result")
+                    callback(result)
                 }
-                return@withContext
             }
-//            TODO(There should be an image search)
         }
     }
 

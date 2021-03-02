@@ -1,5 +1,6 @@
 package ru.bimlibik.pictureswitcher.data
 
+import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.flow.Flow
 import ru.bimlibik.pictureswitcher.data.remote.PictureResponse
 
@@ -7,7 +8,7 @@ interface IPicturesRepository {
 
     suspend fun getPictures(
         query: String?,
-        lastItemKey: String?,
+        lastVisiblePicture: DocumentSnapshot?,
         callback: (Result<PictureResponse>) -> Unit
     )
 

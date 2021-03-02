@@ -1,6 +1,7 @@
 package ru.bimlibik.pictureswitcher.ui.pictures
 
 import androidx.lifecycle.*
+import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.launch
 import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
@@ -22,7 +23,7 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
         if (query.forceUpdate) {
             _dataLoading.value = true
         }
-        loadPictures(query.category, query.key)
+        loadPictures(query.category, query.lastVisiblePicture)
     }
 
     val pictures: LiveData<List<Picture>> = _pictures
@@ -52,11 +53,16 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
     }
 
     fun loadMore() {
-        if (currentQuery.isLastPage) {
+        if (currentQuery.isLastPage()) {
             Timber.i("The user scrolled to the last page.")
             return
         }
-        updateQuery(Query(category = currentQuery.category, key = currentQuery.lastItemKey))
+        updateQuery(
+            Query(
+                category = currentQuery.category,
+                lastVisiblePicture = currentQuery.lastVisiblePicture
+            )
+        )
     }
 
     /**
@@ -71,21 +77,24 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
         currentQuery.apply {
             forceUpdate = query.forceUpdate
             category = query.category
-            key = query.key
+            lastVisiblePicture = query.lastVisiblePicture
         }
-        _trigger.value = currentQuery
+        _trigger.value = query
         Timber.i("Query updated: $currentQuery")
     }
 
-    private fun loadPictures(query: String?, lastItemKey: String?): LiveData<List<Picture>> {
+    private fun loadPictures(
+        query: String?,
+        lastVisiblePicture: DocumentSnapshot?
+    ): LiveData<List<Picture>> {
         val result = MutableLiveData<List<Picture>>()
 
         viewModelScope.launch {
-            repository.getPictures(query, lastItemKey) { remoteResult ->
+            repository.getPictures(query, lastVisiblePicture) { remoteResult ->
                 if (remoteResult is Success) {
                     Timber.i("Pictures uploaded successfully. Remote result size - ${remoteResult.data.pictures.size}")
                     result.value = remoteResult.data.pictures
-                    currentQuery.key = remoteResult.data.key
+                    currentQuery.lastVisiblePicture = remoteResult.data.lastVisiblePicture
                 } else {
                     Timber.e("Error while loading pictures: $remoteResult")
                     result.value = emptyList()
