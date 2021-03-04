@@ -2,6 +2,7 @@ package ru.bimlibik.pictureswitcher.data.local
 
 import android.util.Log
 import io.realm.Realm
+import io.realm.kotlin.deleteFromRealm
 import io.realm.kotlin.toFlow
 import io.realm.kotlin.where
 import kotlinx.coroutines.flow.Flow

@@ -59,9 +59,9 @@ class PicturesFragment : Fragment() {
 
         navDrawer.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_nav_home -> viewModel.searchPictures(null)
+                R.id.menu_nav_home -> viewModel.searchPictures()
                 R.id.menu_nav_favorite -> navigateToFavorites()
-                else -> viewModel.searchPictures(item.title.toString())
+                else -> viewModel.searchPictures(newCategory = item.title.toString())
             }
             drawerLayout.closeDrawers()
             true
@@ -80,7 +80,7 @@ class PicturesFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { viewModel.searchPictures(it) }
+                query?.let { viewModel.searchPictures(newQuery = it) }
                 return true
             }
 
@@ -95,7 +95,7 @@ class PicturesFragment : Fragment() {
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                viewModel.searchPictures(null)
+                viewModel.searchPictures()
                 return true
             }
         })

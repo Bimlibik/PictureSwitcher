@@ -8,7 +8,12 @@ interface PicturesDataSource {
 
     interface Remote {
 
-        suspend fun getPictures(query: String?, lastVisiblePicture: DocumentSnapshot?, callback: (Result<PictureResponse>) -> Unit)
+        suspend fun getPictures(
+            category: String?,
+            query: String?,
+            lastVisiblePicture: DocumentSnapshot?,
+            callback: (Result<PictureResponse>) -> Unit
+        )
 
     }
 

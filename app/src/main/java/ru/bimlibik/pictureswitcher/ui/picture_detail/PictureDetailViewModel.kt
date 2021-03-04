@@ -33,7 +33,7 @@ class PictureDetailViewModel(private val repository: IPicturesRepository) : View
     }
 
     fun showAuthorProfile() {
-        _authorProfileEvent.value = Event(Unit)
+//        _authorProfileEvent.value = Event(Unit)
     }
 
     fun updateFavorite() {

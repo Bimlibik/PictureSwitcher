@@ -3,9 +3,10 @@ package ru.bimlibik.pictureswitcher.data
 import com.google.firebase.firestore.DocumentSnapshot
 
 
-data class Query(
+data class Option(
     var forceUpdate: Boolean = false,
     var category: String? = null,
+    var query: String? = null,
     var lastVisiblePicture: DocumentSnapshot? = null
 ) {
 

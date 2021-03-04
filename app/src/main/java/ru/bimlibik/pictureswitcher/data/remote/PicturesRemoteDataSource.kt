@@ -24,14 +24,15 @@ class PicturesRemoteDataSource(
 
 
     override suspend fun getPictures(
+        category: String?,
         query: String?,
         lastVisiblePicture: DocumentSnapshot?,
         callback: (Result<PictureResponse>) -> Unit
     ) {
-        if (query == null) {
-            getAllPictures(lastVisiblePicture, callback)
-        } else {
-            searchPictures(query, lastVisiblePicture, callback)
+        when {
+            category == null && query == null -> getAllPictures(lastVisiblePicture, callback)
+            category != null && query == null -> getPicturesByCategory(category, lastVisiblePicture, callback)
+            category == null && query != null -> searchPictures(query, lastVisiblePicture, callback)
         }
     }
 
@@ -50,7 +51,29 @@ class PicturesRemoteDataSource(
                     callback(Success(PictureResponse(result, newLastPicture)))
                 }
                 .addOnFailureListener {
-                    Timber.i("Error while loading pictures: $it")
+                    Timber.e("Error while loading pictures: $it")
+                    callback(Error(it))
+                }
+        }
+    }
+
+    private suspend fun getPicturesByCategory(
+        category: String,
+        lastVisiblePicture: DocumentSnapshot?,
+        callback: (Result<PictureResponse>) -> Unit
+    ) {
+        withContext(ioDispatcher) {
+            val result = mutableListOf<Picture>()
+            getQueryByCategory(category, lastVisiblePicture)
+                .get()
+                .addOnSuccessListener { remoteResult ->
+                    Timber.i("Pictures were found successfully. Category - $category")
+                    remoteResult.mapNotNullTo(result) { it.toObject(Picture::class.java) }
+                    val newLastPicture = getLastPicture(remoteResult)
+                    callback(Success(PictureResponse(result, newLastPicture)))
+                }
+                .addOnFailureListener {
+                    Timber.e("Error when trying to find pictures by category = $category: $it")
                     callback(Error(it))
                 }
         }
@@ -72,7 +95,7 @@ class PicturesRemoteDataSource(
                     callback(Success(PictureResponse(result, newLastPicture)))
                 }
                 .addOnFailureListener {
-                    Timber.i("Error when trying to find pictures by query = $query: $it")
+                    Timber.e("Error when trying to find pictures by query = $query: $it")
                     callback(Error(it))
                 }
         }
@@ -86,16 +109,31 @@ class PicturesRemoteDataSource(
         }
     }
 
-    private fun getQuery(query: String, lastVisiblePicture: DocumentSnapshot?): Query {
+    private fun getQueryByCategory(category: String, lastVisiblePicture: DocumentSnapshot?): Query {
         return if (lastVisiblePicture == null) {
             pictures
-//                .orderBy("created", Query.Direction.DESCENDING)
-                .whereArrayContains(FirestoreSchema.Pictures.TAGS, query)
+                .whereEqualTo(FirestoreSchema.Pictures.CATEGORY, category)
+                .orderBy(FirestoreSchema.Pictures.CREATED_AT, Query.Direction.DESCENDING)
                 .limit(ITEMS_PER_PAGE)
         } else {
             pictures
-//                .orderBy("created", Query.Direction.DESCENDING)
+                .whereEqualTo(FirestoreSchema.Pictures.CATEGORY, category)
+                .orderBy(FirestoreSchema.Pictures.CREATED_AT, Query.Direction.DESCENDING)
+                .startAfter(lastVisiblePicture)
+                .limit(ITEMS_PER_PAGE)
+        }
+    }
+
+    private fun getQuery(query: String, lastVisiblePicture: DocumentSnapshot?): Query {
+        return if (lastVisiblePicture == null) {
+            pictures
                 .whereArrayContains(FirestoreSchema.Pictures.TAGS, query)
+                .orderBy(FirestoreSchema.Pictures.CREATED_AT, Query.Direction.DESCENDING)
+                .limit(ITEMS_PER_PAGE)
+        } else {
+            pictures
+                .whereArrayContains(FirestoreSchema.Pictures.TAGS, query)
+                .orderBy(FirestoreSchema.Pictures.CREATED_AT, Query.Direction.DESCENDING)
                 .startAfter(lastVisiblePicture)
                 .limit(ITEMS_PER_PAGE)
         }

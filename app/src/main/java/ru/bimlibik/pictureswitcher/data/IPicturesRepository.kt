@@ -7,6 +7,7 @@ import ru.bimlibik.pictureswitcher.data.remote.PictureResponse
 interface IPicturesRepository {
 
     suspend fun getPictures(
+        category: String?,
         query: String?,
         lastVisiblePicture: DocumentSnapshot?,
         callback: (Result<PictureResponse>) -> Unit

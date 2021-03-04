@@ -18,12 +18,13 @@ class PicturesRepository(
     private val cache = mutableListOf<Picture>()
 
     override suspend fun getPictures(
+        category: String?,
         query: String?,
         lastVisiblePicture: DocumentSnapshot?,
         callback: (Result<PictureResponse>) -> Unit
     ) {
         withContext(ioDispatcher) {
-            picturesRemoteDataSource.getPictures(query, lastVisiblePicture) { result ->
+            picturesRemoteDataSource.getPictures(category, query, lastVisiblePicture) { result ->
                 if (result is Success) {
                     Timber.i("Pictures successfully uploaded from remote data source.")
                     refreshCache(result.data.pictures, lastVisiblePicture == null)
