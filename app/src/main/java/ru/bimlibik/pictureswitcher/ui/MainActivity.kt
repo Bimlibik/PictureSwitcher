@@ -18,9 +18,7 @@ class MainActivity : AppCompatActivity() {
         if (isFirstStart()) {
             val displayMetrics = resources.displayMetrics
             val width = displayMetrics.widthPixels
-            val dpr = displayMetrics.density.toInt()
-            val sizeParams = "&w=$width&dpr=$dpr"
-            setSizeParams(sizeParams)
+            setSizeParams(width)
         }
     }
 }

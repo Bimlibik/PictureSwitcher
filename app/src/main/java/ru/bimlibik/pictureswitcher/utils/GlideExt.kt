@@ -42,7 +42,7 @@ fun ImageView.setSmallPicture(picture: Picture) {
     val height = this.height
     GlideApp.with(this.context)
         .asBitmap()
-        .load(picture.url)
+        .load(picture.getPictureLink(width))
         .centerCrop()
         .override(width, height)
         .thumbnail(0.2f)

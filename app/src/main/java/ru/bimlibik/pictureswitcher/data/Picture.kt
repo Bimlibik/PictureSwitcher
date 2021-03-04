@@ -7,7 +7,7 @@ import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
-import ru.bimlibik.pictureswitcher.utils.getSizeParams
+import ru.bimlibik.pictureswitcher.utils.getFullSize
 
 @RealmClass
 @Parcelize
@@ -62,5 +62,8 @@ open class Picture(
         return author.getProfileLink()
     }
 
-    fun getPictureLink(): String = url + getSizeParams()
+    fun getPictureLink(width: Int): String = "$url&fm=jpg&w=$width&fit=max"
+
+    fun getPictureLink(): String =
+        url + "&auto=format&w=" + getFullSize()
 }
