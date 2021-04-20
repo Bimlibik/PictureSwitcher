@@ -1,20 +1,23 @@
 package ru.bimlibik.pictureswitcher.data.remote
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.PicturesDataSource
 import ru.bimlibik.pictureswitcher.data.Result
-import ru.bimlibik.pictureswitcher.data.Result.*
+import ru.bimlibik.pictureswitcher.data.Result.Error
+import ru.bimlibik.pictureswitcher.data.Result.Success
+import timber.log.Timber
 
 class PicturesRemoteDataSource(
+    private val apiClient: PictureApiInterface,
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance(),
     private val pictures: CollectionReference = Firebase.firestore.collection(FirestoreSchema.FAV_PICTURES),
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -22,7 +25,7 @@ class PicturesRemoteDataSource(
 
     private lateinit var userDocument: DocumentReference
 
-    override suspend fun getPictures(query: String?, page: Int): Result<List<Picture>> {
+    override fun getPictures(query: String?, page: Int): Observable<List<Picture>> {
         if (query == null) {
             return getAllPictures(page)
         }
@@ -66,26 +69,16 @@ class PicturesRemoteDataSource(
     }
 
     private fun deletePicture(picture: Picture, callback: (Result<Boolean>) -> Unit) {
-//        val updates =
+        // TODO: Delete favorite picture from firestore.
     }
 
-    private suspend fun getAllPictures(page: Int): Result<List<Picture>> =
-        withContext(ioDispatcher) {
-            return@withContext try {
-                Success(ApiClient.client.getPictures(page = page))
-            } catch (e: Exception) {
-                Error(e)
-            }
-        }
+    private fun getAllPictures(page: Int): Observable<List<Picture>> =
+        apiClient.getPictures(page = page)
 
-    private suspend fun searchPictures(query: String, page: Int): Result<List<Picture>> =
-        withContext(ioDispatcher) {
-            return@withContext try {
-                Success(ApiClient.client.searchPictures(query = query, page = page).pictures)
-            } catch (e: Exception) {
-                Error(e)
-            }
-        }
+    private fun searchPictures(query: String, page: Int): Observable<List<Picture>> =
+        apiClient.searchPictures(query = query, page = page)
+            .map { it.pictures }
+
 
     private fun initCollectionReference(uid: String) {
         userDocument = pictures.document(uid)
@@ -96,7 +89,7 @@ class PicturesRemoteDataSource(
                 }
             }
             .addOnFailureListener {
-                Log.i("TAG2", "initCollectionReference: $it")
+                Timber.i("initCollectionReference: $it")
             }
     }
 }

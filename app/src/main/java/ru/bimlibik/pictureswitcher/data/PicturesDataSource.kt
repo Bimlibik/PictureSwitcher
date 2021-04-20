@@ -1,12 +1,13 @@
 package ru.bimlibik.pictureswitcher.data
 
+import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.flow.Flow
 
 interface PicturesDataSource {
 
     interface Remote {
 
-        suspend fun getPictures(query: String?, page: Int): Result<List<Picture>>
+        fun getPictures(query: String?, page: Int): Observable<List<Picture>>
 
         fun login(deviceId: String, callback: (Result<Boolean>) -> Unit)
 

@@ -1,14 +1,18 @@
 package ru.bimlibik.pictureswitcher.ui.pictures
 
 import androidx.lifecycle.*
-import kotlinx.coroutines.launch
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.Query
-import ru.bimlibik.pictureswitcher.data.Result.Success
 import ru.bimlibik.pictureswitcher.utils.Event
+import timber.log.Timber
 
 class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel() {
+
+    private val disposableBag = CompositeDisposable()
 
     private val currentQuery = Query()
 
@@ -36,6 +40,7 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
     override fun onCleared() {
         super.onCleared()
         repository.close()
+        disposableBag.clear()
     }
 
     fun start() {
@@ -70,17 +75,18 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
     private fun loadPictures(query: String?, page: Int): LiveData<List<Picture>> {
         val result = MutableLiveData<List<Picture>>()
 
-        viewModelScope.launch {
-            val remoteResult = repository.getPictures(query, page)
-
-            if (remoteResult is Success) {
-                result.value = remoteResult.data
-            } else {
-                result.value = emptyList()
-            }
-            _dataLoading.value = false
-        }
-
+        val disposable = repository.getPictures(query, page)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { remoteResult -> result.value = remoteResult },
+                { error ->
+                    result.value = emptyList()
+                    Timber.e("Error while loading pictures $error")
+                },
+                { _dataLoading.value = false }
+            )
+        disposableBag.add(disposable)
         return result
     }
 }

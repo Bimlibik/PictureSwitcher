@@ -1,12 +1,13 @@
 package ru.bimlibik.pictureswitcher.data
 
-import android.util.Log
+import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import ru.bimlibik.pictureswitcher.data.Result.*
+import ru.bimlibik.pictureswitcher.data.Result.Success
 import ru.bimlibik.pictureswitcher.utils.DEFAULT_PAGE
+import timber.log.Timber
 
 class PicturesRepository(
     private val picturesRemoteDataSource: PicturesDataSource.Remote,
@@ -16,16 +17,12 @@ class PicturesRepository(
 
     private val cache = mutableListOf<Picture>()
 
-    override suspend fun getPictures(query: String?, page: Int): Result<List<Picture>> =
-        withContext(ioDispatcher) {
-            val result = picturesRemoteDataSource.getPictures(query, page)
-            if (result is Success) {
-                refreshCache(result.data, page == DEFAULT_PAGE)
-                return@withContext Success(getCache())
-            } else {
-                return@withContext result
+    override fun getPictures(query: String?, page: Int): Observable<List<Picture>> =
+        picturesRemoteDataSource.getPictures(query, page)
+            .map { result ->
+                refreshCache(result, page == DEFAULT_PAGE)
+                getCache()
             }
-        }
 
     override fun getFavorites(): Flow<Result<List<Picture>>> =
         picturesLocalDataSource.getFavoritePictures()
@@ -40,11 +37,11 @@ class PicturesRepository(
 
     override fun open() {
         picturesLocalDataSource.open()
-        picturesRemoteDataSource.login("qwerty"){ result->
+        picturesRemoteDataSource.login("qwerty") { result ->
             if (result is Success) {
-                Log.i("TAG2", "Login successfully")
+                Timber.i("Login successfully")
             } else {
-                Log.i("TAG2", "Login error - $result")
+                Timber.i("Login error - $result")
             }
         }
     }
