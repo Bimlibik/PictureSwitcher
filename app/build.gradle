@@ -72,6 +72,7 @@ dependencies {
     // retrofit + converter
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
 
     // kotlin serialization
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
@@ -92,6 +93,13 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
+
+    // rx
+    implementation "io.reactivex.rxjava3:rxjava:3.0.12"
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
+    // timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
