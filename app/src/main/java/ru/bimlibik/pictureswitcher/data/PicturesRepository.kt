@@ -1,5 +1,6 @@
 package ru.bimlibik.pictureswitcher.data
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -39,6 +40,13 @@ class PicturesRepository(
 
     override fun open() {
         picturesLocalDataSource.open()
+        picturesRemoteDataSource.login("qwerty"){ result->
+            if (result is Success) {
+                Log.i("TAG2", "Login successfully")
+            } else {
+                Log.i("TAG2", "Login error - $result")
+            }
+        }
     }
 
     override fun close() {

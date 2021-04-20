@@ -5,7 +5,14 @@ import kotlinx.coroutines.flow.Flow
 interface PicturesDataSource {
 
     interface Remote {
+
         suspend fun getPictures(query: String?, page: Int): Result<List<Picture>>
+
+        fun login(deviceId: String, callback: (Result<Boolean>) -> Unit)
+
+        fun logout()
+
+        suspend fun updateFavorite(pictures: Picture, callback: (Result<Boolean>) -> Unit)
     }
 
     interface Local {
