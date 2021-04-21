@@ -93,6 +93,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
 
+    // timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    // cicerone
+    implementation("com.github.terrakok:cicerone:7.0.0")
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
