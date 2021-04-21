@@ -1,13 +1,18 @@
 package ru.bimlibik.pictureswitcher.ui.favorite_pictures
 
 import androidx.lifecycle.*
+import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.flow.map
+import ru.bimlibik.pictureswitcher.Screens
 import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.Result
 import ru.bimlibik.pictureswitcher.utils.Event
 
-class FavoritePicturesViewModel(repository: IPicturesRepository) : ViewModel() {
+class FavoritePicturesViewModel(
+    repository: IPicturesRepository,
+    private val router: Router
+) : ViewModel() {
 
     private val _pictures: LiveData<List<Picture>> = repository.getFavorites()
         .map { computeResult(it) }.asLiveData()
@@ -24,6 +29,11 @@ class FavoritePicturesViewModel(repository: IPicturesRepository) : ViewModel() {
 
     fun showDetail(picture: Picture) {
         _pictureDetailEvent.value = Event(picture)
+        router.navigateTo(Screens.detailsScreen(picture))
+    }
+
+    fun goBack() {
+        router.exit()
     }
 
     private fun computeResult(picturesResult: Result<List<Picture>>): List<Picture> {

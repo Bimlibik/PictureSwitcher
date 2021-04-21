@@ -1,14 +1,20 @@
 package ru.bimlibik.pictureswitcher.ui.pictures
 
 import androidx.lifecycle.*
+import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.launch
+import ru.bimlibik.pictureswitcher.Screens
 import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.data.Query
 import ru.bimlibik.pictureswitcher.data.Result.Success
 import ru.bimlibik.pictureswitcher.utils.Event
+import timber.log.Timber
 
-class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel() {
+class PicturesViewModel(
+    private val repository: IPicturesRepository,
+    private val router: Router
+) : ViewModel() {
 
     private val currentQuery = Query()
 
@@ -47,7 +53,13 @@ class PicturesViewModel(private val repository: IPicturesRepository) : ViewModel
     }
 
     fun showDetail(picture: Picture) {
-        _pictureDetailEvent.value = Event(picture)
+//        _pictureDetailEvent.value = Event(picture)
+        Timber.i("Picture is $picture")
+        router.navigateTo(Screens.detailsScreen(picture))
+    }
+
+    fun showFavorites() {
+        router.navigateTo(Screens.favoritesScreen())
     }
 
     fun loadMore() {

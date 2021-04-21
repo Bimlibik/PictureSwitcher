@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlinx-serialization'
-apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'realm-android'
 apply plugin: 'com.google.gms.google-services'
 
@@ -55,8 +54,6 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
-    // navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.4"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.4"
 
     // Lifecycle dependencies
@@ -97,7 +94,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // cicerone
-    implementation("com.github.terrakok:cicerone:7.0.0")
+    implementation "com.github.terrakok:cicerone:7.0"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

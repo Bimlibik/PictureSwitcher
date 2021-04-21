@@ -113,7 +113,7 @@
                     android:layout_height="50dp"
                     android:layout_marginEnd="16dp"
                     android:src="@drawable/state_info"
-                    android:onClick="@{()-> viewModel.showAuthorProfile()}"
+                    android:onClick="@{()-> viewModel.showAuthorProfile(item.authorProfileLink, item.author.name)}"
                     android:contentDescription="@string/content_description_author_profile"/>
 
                 <ImageView

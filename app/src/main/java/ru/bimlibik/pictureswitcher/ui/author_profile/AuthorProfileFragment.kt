@@ -5,15 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.navArgs
+import com.github.terrakok.cicerone.Router
+import org.koin.android.ext.android.inject
 import ru.bimlibik.pictureswitcher.databinding.FragmentAuthorProfileBinding
 
 class AuthorProfileFragment : Fragment() {
 
+    private val router by inject<Router>()
+
+    companion object {
+        private const val ARGS_LINK_KEY = "AuthorProfileFragmentLinkKey"
+        private const val ARGS_NAME_KEY = "AuthorProfileFragmentNameKey"
+
+        fun newInstance(link: String, authorName: String): AuthorProfileFragment {
+            return AuthorProfileFragment().also { fragment ->
+                fragment.arguments = bundleOf(
+                    ARGS_LINK_KEY to link,
+                    ARGS_NAME_KEY to authorName
+                )
+            }
+        }
+    }
+
     private lateinit var viewDataBinding: FragmentAuthorProfileBinding
-    private val args: AuthorProfileFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,13 +49,13 @@ class AuthorProfileFragment : Fragment() {
 
     private fun setupWebview() {
         viewDataBinding.webview.webViewClient = WebViewClient()
-        viewDataBinding.webview.loadUrl(args.link)
+        viewDataBinding.webview.loadUrl(arguments?.getString(ARGS_LINK_KEY) ?: "")
     }
 
     private fun setupToolbar() {
-        viewDataBinding.toolbarTitle.text = args.authorName
-        viewDataBinding.toolbar.setNavigationOnClickListener { view ->
-            view.findNavController().navigateUp()
+        viewDataBinding.toolbarTitle.text = arguments?.getString(ARGS_NAME_KEY)
+        viewDataBinding.toolbar.setNavigationOnClickListener {
+            router.exit()
         }
     }
 }

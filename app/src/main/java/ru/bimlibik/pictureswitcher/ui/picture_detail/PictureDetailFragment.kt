@@ -6,37 +6,50 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.bimlibik.pictureswitcher.R
+import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.databinding.FragmentPictureDetailBinding
 import ru.bimlibik.pictureswitcher.utils.EventObserver
 import ru.bimlibik.pictureswitcher.utils.hideKeyboard
 import ru.bimlibik.pictureswitcher.utils.setupSnackbar
 import ru.bimlibik.pictureswitcher.workers.WallpaperWorker
+import timber.log.Timber
 
 class PictureDetailFragment : Fragment() {
+
+    companion object {
+        private const val ARGS_KEY = "PictureDetailFragmentKey"
+
+        fun newInstance(picture: Picture): PictureDetailFragment {
+            return PictureDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(ARGS_KEY, picture)
+                }
+            }
+        }
+    }
 
     private val viewModel: PictureDetailViewModel by viewModel()
     private lateinit var viewDataBinding: FragmentPictureDetailBinding
 
-    private val args: PictureDetailFragmentArgs by navArgs()
+    private val args: Picture?
+        get() = arguments?.getParcelable(ARGS_KEY)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Timber.i("Args = $args")
         viewDataBinding = FragmentPictureDetailBinding
             .inflate(inflater, container, false)
             .apply {
                 viewModel = this@PictureDetailFragment.viewModel
-                item = args.picture
+                item = args
                 root.hideKeyboard()
             }
         return viewDataBinding.root
@@ -45,22 +58,13 @@ class PictureDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.lifecycleOwner = this
-        viewModel.start(args.picture)
+        viewModel.start(args)
         setupSnackbar()
         setupNavigation()
         setupToolbar()
     }
 
     private fun setupNavigation() {
-        viewModel.authorProfileEvent.observe(viewLifecycleOwner, EventObserver {
-            val action = PictureDetailFragmentDirections
-                .actionPictureDetailToAuthorProfile(
-                    args.picture.getAuthorProfileLink(),
-                    args.picture.author?.name
-                )
-            findNavController().navigate(action)
-        })
-
         viewModel.wallpaperEvent.observe(viewLifecycleOwner, EventObserver {
             showDialog()
         })
@@ -84,7 +88,7 @@ class PictureDetailFragment : Fragment() {
         val workManager = WorkManager.getInstance(requireContext())
 
         val url = Data.Builder()
-            .putString(WallpaperWorker.IMAGE_URL, args.picture.getPictureLink())
+            .putString(WallpaperWorker.IMAGE_URL, args?.getPictureLink())
             .build()
 
         val request = OneTimeWorkRequestBuilder<WallpaperWorker>()
@@ -98,8 +102,8 @@ class PictureDetailFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        viewDataBinding.toolbar.setNavigationOnClickListener { view ->
-            view.findNavController().navigateUp()
+        viewDataBinding.toolbar.setNavigationOnClickListener {
+            viewModel.goBack()
         }
     }
 

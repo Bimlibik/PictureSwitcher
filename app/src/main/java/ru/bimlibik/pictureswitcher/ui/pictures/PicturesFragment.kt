@@ -5,12 +5,10 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.bimlibik.pictureswitcher.R
 import ru.bimlibik.pictureswitcher.databinding.FragmentPicturesBinding
-import ru.bimlibik.pictureswitcher.utils.EventObserver
 import ru.bimlibik.pictureswitcher.utils.hideKeyboard
 import ru.bimlibik.pictureswitcher.utils.setupRefreshLayout
 
@@ -40,17 +38,9 @@ class PicturesFragment : Fragment() {
 
         setupAdapter()
         setupNavDrawerListener()
-        setupNavigation()
         setupToolbarNavigation()
         setupToolbarMenu()
         setupRefreshLayout(viewDataBinding.swipe)
-    }
-
-    private fun setupNavigation() {
-        viewModel.pictureDetailEvent.observe(viewLifecycleOwner, EventObserver {
-            val action = PicturesFragmentDirections.actionPicturesToPictureDetail(it)
-            findNavController().navigate(action)
-        })
     }
 
     private fun setupNavDrawerListener() {
@@ -60,7 +50,7 @@ class PicturesFragment : Fragment() {
         navDrawer.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_nav_home -> viewModel.searchPictures(null)
-                R.id.menu_nav_favorite -> navigateToFavorites()
+                R.id.menu_nav_favorite -> viewModel.showFavorites()
                 else -> viewModel.searchPictures(item.title.toString())
             }
             drawerLayout.closeDrawers()
@@ -105,8 +95,4 @@ class PicturesFragment : Fragment() {
         viewDataBinding.recycler.adapter = PicturesAdapter(viewModel)
     }
 
-    private fun navigateToFavorites() {
-        val action = PicturesFragmentDirections.actionPicturesToFavoritePictures()
-        findNavController().navigate(action)
-    }
 }

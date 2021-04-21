@@ -2,13 +2,18 @@ package ru.bimlibik.pictureswitcher.ui.picture_detail
 
 import androidx.lifecycle.*
 import androidx.work.WorkInfo
+import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.launch
 import ru.bimlibik.pictureswitcher.R
+import ru.bimlibik.pictureswitcher.Screens
 import ru.bimlibik.pictureswitcher.data.IPicturesRepository
 import ru.bimlibik.pictureswitcher.data.Picture
 import ru.bimlibik.pictureswitcher.utils.Event
 
-class PictureDetailViewModel(private val repository: IPicturesRepository) : ViewModel() {
+class PictureDetailViewModel(
+    private val repository: IPicturesRepository,
+    private val router: Router
+) : ViewModel() {
 
     private val _picture = MutableLiveData<Picture>()
 
@@ -28,12 +33,17 @@ class PictureDetailViewModel(private val repository: IPicturesRepository) : View
     private val _wallpaperEvent = MutableLiveData<Event<Unit>>()
     val wallpaperEvent: LiveData<Event<Unit>> = _wallpaperEvent
 
-    fun start(picture: Picture) {
+    fun start(picture: Picture?) {
         _picture.value = picture
     }
 
-    fun showAuthorProfile() {
-        _authorProfileEvent.value = Event(Unit)
+    fun showAuthorProfile(link: String, authorName: String) {
+//        _authorProfileEvent.value = Event(Unit)
+        router.navigateTo(Screens.authorProfileScreen(link, authorName))
+    }
+
+    fun goBack() {
+        router.exit()
     }
 
     fun updateFavorite() {
